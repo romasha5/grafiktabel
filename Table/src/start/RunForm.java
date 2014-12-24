@@ -9,6 +9,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
+import javax.swing.JOptionPane;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class RunForm extends JFrame {
 
@@ -50,6 +54,14 @@ public class RunForm extends JFrame {
 		menuBar.add(menu);
 		
 		JMenuItem menuItem = new JMenuItem("\u0412\u0438\u0445\u0456\u0434");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		
+		JMenuItem menuItem_1 = new JMenuItem("\u0412\u0456\u0434\u043A\u0440\u0438\u0442\u0438");
+		menu.add(menuItem_1);
 		menu.add(menuItem);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
