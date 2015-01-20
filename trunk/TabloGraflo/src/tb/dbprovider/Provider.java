@@ -15,11 +15,11 @@ public class Provider {
 	    try {
 	      Class.forName("org.sqlite.JDBC");
 	      c = DriverManager.getConnection(cs);
-	    } catch ( Exception e ) {
-	      JOptionPane.showMessageDialog(null, "Помилка підключення");
+	    } catch ( ClassNotFoundException | SQLException e ) {
+	      JOptionPane.showMessageDialog(null, "DB is not connect");
 	      System.exit(0);
 	    }
-	    JOptionPane.showMessageDialog(null, "Базу підключено");
+	    JOptionPane.showMessageDialog(null, "All is faine");
 	  }
 	  
 	  public static void closeDeBase() throws SQLException, ClassNotFoundException

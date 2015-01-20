@@ -6,12 +6,11 @@ import java.awt.HeadlessException;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import tb.dbprovider.*;
+import tb.visual.StartMenu;
 
 public class Start extends JFrame {
 
@@ -38,29 +37,14 @@ public class Start extends JFrame {
 		
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());
-		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+		StartMenu stm = new StartMenu();
+		stm.menuBuild(menuBar);
 		
-		JMenu [] menuTest = new JMenu [] {new JMenu("Файл"),new JMenu("Вигляд"),new JMenu("Вихід")};
-		
-		
-		for (int i = 0; i<menuTest.length;i++) {
-			menuBar.add(menuTest[i]);
-		}
-		
-		JMenuItem [] menuItem0 = new JMenuItem []{new JMenuItem("Vasya"),new JMenuItem("Petya")};
-		
-		for (int i = 0; i<menuItem0.length;i++) {
-			menuTest[0].add(menuItem0[i]);
-		}
-		
-
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
-	
-
 }
