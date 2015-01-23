@@ -22,7 +22,7 @@ public class Start extends JFrame {
 	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		new Start();
-		Provider.connectToDeBase("jdbc:sqlite:grafiktabel.db");
+		Provider.connectToDeBase("jdbc:sqlite:baseSQLite\\grafiktabel.db");
 		Provider.closeDeBase();
 	}
 
