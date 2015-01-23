@@ -15,16 +15,19 @@ public class StartMenu {
 	JMenuItem fileCalc = new JMenuItem ("Calc");
 	JMenuItem fileExit = new JMenuItem ("Exit");
 	
+	JMenu menuOptions = new JMenu("Options");
+	
 	void setMenuFile() {
 		this.menuFile.add(this.fileCalc);
 		this.menuFile.addSeparator();
-		this.menuFile.add(this.fileExit);	
+		this.menuFile.add(this.fileExit);
 	}
 
 	public void menuBuild(JMenuBar menuBar) {
 		setMenuFile();
 		setListeners();
 		menuBar.add(this.menuFile);
+		menuBar.add(this.menuOptions);
 		
 	}
 	
@@ -55,6 +58,8 @@ public class StartMenu {
 				System.exit(0);
 			}
 		});
+		
+		
 	}
 	
 	
