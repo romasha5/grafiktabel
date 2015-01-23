@@ -5,10 +5,7 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import java.awt.Frame;
 import java.io.File;
-
-import jdk.nashorn.internal.scripts.JO;
 
 
 public class Provider {
