@@ -25,7 +25,6 @@ public class Provider {
 	    			JOptionPane.showMessageDialog(null, "DataBase not found");
 	    			System.exit(0);
 	    		} 
-	      	JOptionPane.showMessageDialog(null, "All is faine");
 	    }	
 	    else{
 	    	int in =JOptionPane.showConfirmDialog(null, "DataBase is not found. Creat it?",
@@ -37,18 +36,18 @@ public class Provider {
 		    	try {
 	    			Class.forName("org.sqlite.JDBC");
 	    			c = DriverManager.getConnection(cs);
+	    			CreateDataBase.creatDB(c);
+	    			c = DriverManager.getConnection(cs);
 	    		} 
 	    	catch ( ClassNotFoundException |SQLException e ) {
-	    			JOptionPane.showMessageDialog(null, "DataBase not found");
+	    			JOptionPane.showMessageDialog(null, "It's ClassNotFoundException or SQLException");
 	    			System.exit(0);
 	    		} 
-	      	JOptionPane.showMessageDialog(null, "DataBase created.");
 	    	}
 	    }
 	  }
-	  
-	  
-	  public static void closeDeBase() throws SQLException, ClassNotFoundException
+	
+	public static void closeDeBase() throws SQLException, ClassNotFoundException
 	  {
 		  c.close();
 	  }
