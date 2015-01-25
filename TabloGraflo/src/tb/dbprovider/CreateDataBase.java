@@ -8,6 +8,7 @@ final class CreateDataBase {
 	
 	static Statement stmt;	  
 	static String sql;
+	
 	public static void creatDB( Connection c )
 	  {
 		stmt=null;
