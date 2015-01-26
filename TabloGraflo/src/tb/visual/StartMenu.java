@@ -23,6 +23,7 @@ public class StartMenu {
 	JMenuItem dictionaryRegulationsTime = new JMenuItem("RegulationsTime");
 	
 	JMenu menuOptions = new JMenu("Options");
+	JMenuItem optionsDBProperties = new JMenuItem("DBProperties");
 	
 	void setMenuFile() {
 		this.menuFile.add(this.fileCalc);
@@ -35,6 +36,8 @@ public class StartMenu {
 		this.menuDictionary.addSeparator();
 		this.menuDictionary.add(this.dictionaryRegulations);
 		this.menuDictionary.add(this.dictionaryRegulationsTime);
+		
+		this.menuOptions.add(this.optionsDBProperties);
 	}
 
 	public void menuBuild(JMenuBar menuBar) {
