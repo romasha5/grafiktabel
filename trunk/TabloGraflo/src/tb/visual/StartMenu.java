@@ -81,7 +81,7 @@ public class StartMenu {
 					p.waitFor();
 				}
 				catch (Exception err) {
-					JOptionPane.showMessageDialog(null, err);;
+					JOptionPane.showMessageDialog(null, err);
 				}
 				
 			}
