@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import tb.properties.Properties;
+
 import java.io.File;
 
 
@@ -15,7 +17,9 @@ public class Provider {
 	public static void connectToDeBase(String cs)
 	  {
 	    c = null;
-	    File file = new File("baseSQLite\\grafiktabel.db");
+	    Properties ps = new Properties();
+	    File file = new File(ps.getProperties());
+	    ps.putProperties(file.getAbsolutePath());
 	    if (file.exists()){
 	    	try {
 	    			Class.forName("org.sqlite.JDBC");
