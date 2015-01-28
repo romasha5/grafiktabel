@@ -95,7 +95,13 @@ public class StartMenu {
 			}
 		});
 		
-		
+		this.optionsDBProperties.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new FormProperties();
+			}
+		});
 	}
 	
 	
