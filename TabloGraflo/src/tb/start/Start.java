@@ -32,7 +32,7 @@ public class Start extends JFrame {
 	public Start() throws HeadlessException {
 		super();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setPreferredSize(new Dimension(800,600));
+		setPreferredSize(new Dimension(1024,768));
 		setResizable(false);
 		
 		contentPane = new JPanel();
