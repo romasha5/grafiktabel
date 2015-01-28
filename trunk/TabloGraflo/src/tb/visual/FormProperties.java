@@ -1,7 +1,7 @@
 package tb.visual;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 
 import javax.swing.JButton;
@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class FormProperties extends JDialog {
 
@@ -29,9 +30,13 @@ public class FormProperties extends JDialog {
 		
 		this.contentPane = new JPanel();
 		add(contentPane);
-		this.contentPane.setLayout(new BorderLayout());
+		this.contentPane.setLayout(new FlowLayout());
 		
-		this.contentPane.add(new JLabel("ConnectionString:"),BorderLayout.NORTH);
+		
+		this.contentPane.add(new JLabel("ConnectionString:"),FlowLayout.LEFT);
+		JTextField tf = new JTextField();
+		
+		this.contentPane.add(tf);
 		
 		this.contentPane.add(new JButton("Ok"));
 		
