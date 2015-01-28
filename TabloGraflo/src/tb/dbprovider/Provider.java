@@ -19,8 +19,8 @@ public class Provider {
 	    c = null;
 	    Properties ps = new Properties();
 	    File file = new File(ps.getProperties());
-	    JOptionPane.showMessageDialog(null, ps.getProperties());
-	    //ps.putProperties(file.getAbsolutePath());
+	    
+	    
 	    if (file.exists()){
 	    	try {
 	    			Class.forName("org.sqlite.JDBC");
