@@ -21,6 +21,10 @@ public class FormProperties extends JDialog {
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel contentPane;
+	private Properties pr;
+	private JLabel jl1;
+	private JTextField tf1;
+	private JTextField tf2;
 
 	public FormProperties() throws HeadlessException {
 		super();
@@ -31,20 +35,26 @@ public class FormProperties extends JDialog {
 		setTitle("Properties");
 		
 		this.contentPane = new JPanel();
+		this.contentPane.setBounds(0, 0, 600, 300);
 		add(contentPane);
 		this.contentPane.setLayout(null);
 		
-		JLabel jl1 = new JLabel("DBase Path:");
-		jl1.setBounds(10, 10, 150, 20);
-		jl1.setFont(new Font("Tahoma", Font.BOLD, 14));;
-		this.contentPane.add(jl1);
+		this.jl1 = new JLabel("DBase Path:");
+		this.jl1.setBounds(10, 40, 150, 20);
+		this.jl1.setFont(new Font("Tahoma", Font.BOLD, 14));;
+		this.contentPane.add(this.jl1);
 		
-		JTextField tf1 = new JTextField();
-		tf1.setBounds(100, 10, 490, 20);
-		tf1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Properties pr = new Properties();
-		tf1.setText(pr.getProperties());
-		this.contentPane.add(tf1);
+		this.tf1 = new JTextField();
+		this.tf1.setBounds(100, 38, 490, 20);
+		this.tf1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.pr = new Properties();
+		this.tf1.setText(pr.getProperties());
+		this.contentPane.add(this.tf1);
+		
+		this.tf2= new JTextField();
+		this.tf2.setBounds(10,10,580,20);
+		this.tf2.setEditable(false);
+		this.contentPane.add(this.tf2);
 		
 		this.contentPane.add(new JButton("Ok"));
 		
