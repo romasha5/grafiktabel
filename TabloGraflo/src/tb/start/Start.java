@@ -10,6 +10,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 import tb.dbprovider.*;
+import tb.properties.userProperties;
 import tb.visual.StartMenu;
 
 public class Start extends JFrame {
@@ -22,7 +23,8 @@ public class Start extends JFrame {
 	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		new Start();
-		Provider.connectToDeBase("jdbc:sqlite:baseSQLite\\grafiktabel.db");
+		userProperties up = new userProperties();
+		Provider.connectToDeBase(up.getConStr());
 		Provider.closeDeBase();
 	}
 
