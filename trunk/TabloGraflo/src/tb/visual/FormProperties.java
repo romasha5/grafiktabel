@@ -113,6 +113,7 @@ public class FormProperties extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				pr.putConStr(jtfConStr.getText());
+				pr.putProperties(jtfPath.getText());
 			}
 		});
 		this.jbSave.setBounds(365, 125, 110, 25);
