@@ -69,7 +69,7 @@ public class FormProperties extends JDialog {
 		this.contentPane.add(this.tf2);
 		
 		this.jb1 = new JButton("BuildString");		
-		this.jb1.setBounds(10,90,120,30);
+		this.jb1.setBounds(480,90,110,25);
 		this.contentPane.add(jb1);
 		
 		pack();
