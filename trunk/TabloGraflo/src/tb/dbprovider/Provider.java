@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import tb.properties.Properties;
+import tb.properties.userProperties;
 
 import java.io.File;
 
@@ -17,7 +17,7 @@ public class Provider {
 	public static void connectToDeBase(String cs)
 	  {
 	    c = null;
-	    Properties ps = new Properties();
+	    userProperties ps = new userProperties();
 	    File file = new File(ps.getProperties());
 	    
 	    
