@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import tb.dbprovider.*;
-import tb.properties.WhatIsOS;
 import tb.properties.userProperties;
 import tb.visual.StartMenu;
 
@@ -26,7 +25,7 @@ public class Start extends JFrame {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		new Start();
 		userProperties up = new userProperties();
-		JOptionPane.showMessageDialog(null, WhatIsOS.getI());
+		JOptionPane.showMessageDialog(null, up.getConStr());
 		Provider.connectToDeBase(up.getConStr());
 		Provider.closeDeBase();
 	}
