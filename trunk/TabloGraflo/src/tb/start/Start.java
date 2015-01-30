@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import tb.dbprovider.*;
 import tb.properties.userProperties;
@@ -21,11 +23,19 @@ public class Start extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		try {
+		      UIManager.setLookAndFeel(
+		         UIManager.getCrossPlatformLookAndFeelClassName());
+		   }
+		   catch (Exception e) { }
+		
+		
 		new Start();
 		userProperties up = new userProperties();
 		
 		Provider.connectToDeBase(up.getConStr());
+		
 		Provider.closeDeBase();
 	}
 
