@@ -26,7 +26,7 @@ public class Start extends JFrame {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		new Start();
 		userProperties up = new userProperties();
-		JOptionPane.showMessageDialog(null, WhatIsOS.getOS());
+		JOptionPane.showMessageDialog(null, WhatIsOS.getI());
 		Provider.connectToDeBase(up.getConStr());
 		Provider.closeDeBase();
 	}
