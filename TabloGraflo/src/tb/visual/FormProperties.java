@@ -104,7 +104,7 @@ public class FormProperties extends JDialog {
 				
 			}
 		});
-		this.jbStringBuilder.setBounds(480,95,110,25);		
+		this.jbStringBuilder.setBounds(365,95,225,25);		
 		this.contentPane.add(jbStringBuilder);
 		
 		this.jbSave = new JButton("Save");
