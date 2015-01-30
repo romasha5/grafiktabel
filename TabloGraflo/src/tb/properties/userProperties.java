@@ -13,20 +13,20 @@ public class userProperties {
     }
     
     public String getProperties(){
-    	if(WhatIsOS.getOS().indexOf("win")>=0){
+    	if(WhatIsOS.getI()==0){
     		this.cs = userProp.get("pathCS", "baseSQLite\\grafiktabel.db");
     	}
-    	else if (WhatIsOS.getOS().indexOf("nux")>=0){
+    	else if (WhatIsOS.getI()==1){
     		this.cs = userProp.get("pathCS", "baseSQLite/grafiktabel.db");
     	}
     	return cs;
     }
     
     public String getConStr(){
-    	if(WhatIsOS.getOS().indexOf("win")>=0){
+    	if(WhatIsOS.getI()==0){
     		this.constr = userProp.get("ConStr", "jdbc:sqlite:baseSQLite\\grafiktabel.db");
     	}
-    	else if (WhatIsOS.getOS().indexOf("nux")>=0){
+    	else if (WhatIsOS.getI()==1){
     		this.constr = userProp.get("ConStr", "jdbc:sqlite:baseSQLite/grafiktabel.db");
     	}
     	return constr;
