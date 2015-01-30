@@ -40,8 +40,7 @@ public class Provider {
 	    	else{
 		    	try {
 		    		Class.forName("org.sqlite.JDBC");
-	    			c = DriverManager.getConnection(cs);
-	    			JOptionPane.showMessageDialog(null, c);
+		    		c = DriverManager.getConnection(cs);
 	    			CreateDataBase.creatDB(c);
 	    			c = DriverManager.getConnection(cs);
 	    		} 

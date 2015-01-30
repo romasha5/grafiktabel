@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import tb.dbprovider.*;
@@ -25,7 +24,7 @@ public class Start extends JFrame {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		new Start();
 		userProperties up = new userProperties();
-		JOptionPane.showMessageDialog(null, up.getConStr());
+		
 		Provider.connectToDeBase(up.getConStr());
 		Provider.closeDeBase();
 	}

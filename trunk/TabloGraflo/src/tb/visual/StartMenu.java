@@ -9,6 +9,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import tb.properties.WhatIsOS;
+
 public class StartMenu {
 	
 	JMenu menuFile = new JMenu("File");
@@ -59,9 +61,14 @@ public class StartMenu {
 				Process p = null;
 				
 				try {
-					
-					p = r.exec("calc");
-					p.waitFor();
+					if(WhatIsOS.getI()==0){
+						p = r.exec("calc");
+						p.waitFor();
+					}
+					else if(WhatIsOS.getI()==1){
+						p = r.exec("kcalc");
+						p.waitFor();
+					}
 				}
 				catch (Exception err) {
 					JOptionPane.showMessageDialog(null, err);;
@@ -78,8 +85,14 @@ public class StartMenu {
 				Process p = null;
 				
 				try {
-					p = r.exec("notepad");
-					p.waitFor();
+					if(WhatIsOS.getI()==0){
+						p = r.exec("notepad");
+						p.waitFor();
+					}
+					else if(WhatIsOS.getI()==1){
+						p = r.exec("kjots");
+						p.waitFor();
+					}
 				}
 				catch (Exception err) {
 					JOptionPane.showMessageDialog(null, err);
