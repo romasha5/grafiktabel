@@ -59,6 +59,7 @@ public class StartMenu {
 				Process p = null;
 				
 				try {
+					
 					p = r.exec("calc");
 					p.waitFor();
 				}
