@@ -4,6 +4,8 @@ import java.util.prefs.*;
 public class userProperties {
 	
     private Preferences userProp;
+    String cs;
+    String constr;
     
     public userProperties()
     {
@@ -11,12 +13,22 @@ public class userProperties {
     }
     
     public String getProperties(){
-    	String cs = userProp.get("pathCS", "baseSQLite\\grafiktabel.db");
+    	if(WhatIsOS.getOS().indexOf("win")>=0){
+    		this.cs = userProp.get("pathCS", "baseSQLite\\grafiktabel.db");
+    	}
+    	else if (WhatIsOS.getOS().indexOf("nux")>=0){
+    		this.cs = userProp.get("pathCS", "baseSQLite/grafiktabel.db");
+    	}
     	return cs;
     }
     
     public String getConStr(){
-    	String constr = userProp.get("ConStr", "jdbc:sqlite:baseSQLite\\grafiktabel.db");
+    	if(WhatIsOS.getOS().indexOf("win")>=0){
+    		this.constr = userProp.get("ConStr", "jdbc:sqlite:baseSQLite\\grafiktabel.db");
+    	}
+    	else if (WhatIsOS.getOS().indexOf("nux")>=0){
+    		this.constr = userProp.get("ConStr", "jdbc:sqlite:baseSQLite/grafiktabel.db");
+    	}
     	return constr;
     }
 
