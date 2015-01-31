@@ -4,6 +4,7 @@ package tb.visual;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -28,9 +29,12 @@ public class StartMenu {
 	JMenuItem optionsDBProperties = new JMenuItem("DBProperties");
 	
 	void setMenuFile() {
+		this.fileCalc.setIcon(new ImageIcon(getClass().getResource("/icons/ñalculator.png")));
 		this.menuFile.add(this.fileCalc);
+		this.fileNotepad.setIcon(new ImageIcon(getClass().getResource("/icons/notepad.png")));
 		this.menuFile.add(this.fileNotepad);
 		this.menuFile.addSeparator();
+		this.fileExit.setIcon(new ImageIcon(getClass().getResource("/icons/cancel.png")));
 		this.menuFile.add(this.fileExit);
 
 		this.menuDictionary.add(this.dictionaryHumans);
@@ -39,6 +43,7 @@ public class StartMenu {
 		this.menuDictionary.add(this.dictionaryRegulations);
 		this.menuDictionary.add(this.dictionaryRegulationsTime);
 		
+		this.optionsDBProperties.setIcon(new ImageIcon(getClass().getResource("/icons/database.png")));
 		this.menuOptions.add(this.optionsDBProperties);
 	}
 
