@@ -58,16 +58,13 @@ public class StartMenu {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Runtime r = Runtime.getRuntime();
-				Process p = null;
-				
+								
 				try {
 					if(WhatIsOS.getI()==0){
-						p = r.exec("calc");
-						p.waitFor();
+						r.exec("calc");
 					}
 					else if(WhatIsOS.getI()==1){
-						p = r.exec("kcalc");
-						p.waitFor();
+						r.exec("kcalc");
 					}
 				}
 				catch (Exception err) {
@@ -82,16 +79,13 @@ public class StartMenu {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Runtime r = Runtime.getRuntime();
-				Process p = null;
 				
 				try {
 					if(WhatIsOS.getI()==0){
-						p = r.exec("notepad");
-						p.waitFor();
+						r.exec("notepad");
 					}
 					else if(WhatIsOS.getI()==1){
-						p = r.exec("kjots");
-						p.waitFor();
+						r.exec("kjots");
 					}
 				}
 				catch (Exception err) {
