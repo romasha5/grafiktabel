@@ -73,8 +73,8 @@ public class FormProperties extends JDialog {
 		this.jtfConStr.setBounds(10,38,580,20);
 		this.jtfConStr.setEditable(false);
 		this.jtfConStr.setFont(new Font("Tahoma",Font.BOLD, 12));
-		this.jtfConStr.setBackground(Color.CYAN);
-		this.jtfConStr.setForeground(Color.MAGENTA);
+		//this.jtfConStr.setBackground(Color.CYAN);
+		//this.jtfConStr.setForeground(Color.MAGENTA);
 		this.jtfConStr.setText(pr.getConStr());
 		this.contentPane.add(this.jtfConStr);
 		
