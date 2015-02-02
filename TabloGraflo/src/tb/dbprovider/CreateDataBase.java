@@ -3,7 +3,11 @@ package tb.dbprovider;
 import java.sql.*;
 
 import javax.swing.JOptionPane;
-
+ /**Створення БД у випадку її відсутності;
+  * 
+  * @author Roma
+  *
+  */
 final class CreateDataBase {
 	
 	static Statement stmt;	  

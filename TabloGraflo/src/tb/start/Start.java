@@ -19,6 +19,8 @@ import tb.visual.StartMenu;
 public class Start extends JFrame {
 
 	/**
+	 * Стартовий метод і конструктор основного фрейму.
+	 * @author Roma
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -56,7 +58,7 @@ public class Start extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		StartMenu stm = new StartMenu();
-		stm.menuBuild(menuBar);
+		stm.menuBuild(menuBar, this);
 		
 		pack();
 		setLocationRelativeTo(null);
