@@ -48,9 +48,12 @@ public class StartMenu {
 
 		this.dictionaryHumans.setIcon(new ImageIcon(getClass().getResource("/icons/humans.png")));
 		this.menuDictionary.add(this.dictionaryHumans);
+		this.dictionaryTime.setIcon(new ImageIcon(getClass().getResource("/icons/time.png")));
 		this.menuDictionary.add(this.dictionaryTime);
 		this.menuDictionary.addSeparator();
+		this.dictionaryRegulations.setIcon(new ImageIcon(getClass().getResource("/icons/regulation.png")));
 		this.menuDictionary.add(this.dictionaryRegulations);
+		this.dictionaryRegulationsTime.setIcon(new ImageIcon(getClass().getResource("/icons/regulationtime.png")));
 		this.menuDictionary.add(this.dictionaryRegulationsTime);
 		
 		this.optionsDBProperties.setIcon(new ImageIcon(getClass().getResource("/icons/database.png")));
