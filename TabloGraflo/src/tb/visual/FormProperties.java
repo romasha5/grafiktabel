@@ -88,9 +88,10 @@ public class FormProperties extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				fileopen = new JFileChooser();
+				
 				FileFilter fill = new FileNameExtensionFilter("DBase file", "db");
 				fileopen.setFileFilter(fill);
-				ret = fileopen.showDialog(null, "Open file");
+				ret = fileopen.showOpenDialog(jd);
 				if(ret==JFileChooser.APPROVE_OPTION){
 					jtfPath.setText(fileopen.getSelectedFile().getAbsolutePath());
 				}
