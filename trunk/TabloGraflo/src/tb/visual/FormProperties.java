@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -45,6 +47,8 @@ public class FormProperties extends JDialog {
 		jd.setResizable(false);
 		jd.setModal(true);
 		jd.setTitle("Properties");
+		ImageIcon img =new ImageIcon(getClass().getResource("/icons/address-book.png"));
+		jd.setIconImage(img.getImage());
 		
 		this.contentPane = new JPanel();
 		this.contentPane.setBounds(0, 0, 600, 185);
@@ -104,8 +108,11 @@ public class FormProperties extends JDialog {
 				
 			}
 		});
-		this.jbStringBuilder.setBounds(365,95,225,25);		
+		
+		this.jbStringBuilder.setBounds(365,95,225,25);
+		this.jbStringBuilder.setIcon(new ImageIcon(getClass().getResource("/icons/cs.png")));
 		this.contentPane.add(jbStringBuilder);
+		
 		
 		this.jbSave = new JButton("Save");
 		this.jbSave.addActionListener(new ActionListener() {
@@ -117,6 +124,7 @@ public class FormProperties extends JDialog {
 			}
 		});
 		this.jbSave.setBounds(365, 125, 110, 25);
+		this.jbSave.setIcon(new ImageIcon(getClass().getResource("/icons/save.png")));
 		this.contentPane.add(jbSave);
 		
 		this.jbExit = new JButton("Exit");
@@ -128,6 +136,7 @@ public class FormProperties extends JDialog {
 			}
 		});
 		this.jbExit.setBounds(480, 125, 110, 25);
+		this.jbExit.setIcon(new ImageIcon(getClass().getResource("/icons/cancel.png")));
 		this.contentPane.add(jbExit);
 		
 		jd.pack();
