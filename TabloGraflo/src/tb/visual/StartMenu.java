@@ -25,6 +25,10 @@ public class StartMenu {
 	JMenuItem dictionaryRegulations = new JMenuItem("Regulations");
 	JMenuItem dictionaryRegulationsTime = new JMenuItem("RegulationsTime");
 	
+	JMenu menuWork = new JMenu("DataInput");
+	JMenuItem workTimesheet = new JMenuItem("TimeSheet");
+	JMenuItem workPlansheet = new JMenuItem("PlanSheet");
+	
 	JMenu menuOptions = new JMenu("Options");
 	JMenuItem optionsDBProperties = new JMenuItem("DBProperties");
 	
@@ -36,7 +40,13 @@ public class StartMenu {
 		this.menuFile.addSeparator();
 		this.fileExit.setIcon(new ImageIcon(getClass().getResource("/icons/cancel.png")));
 		this.menuFile.add(this.fileExit);
+		
+		this.workPlansheet.setIcon(new ImageIcon(getClass().getResource("/icons/plan.png")));
+		this.menuWork.add(this.workPlansheet);
+		this.workTimesheet.setIcon(new ImageIcon(getClass().getResource("/icons/tabel.png")));
+		this.menuWork.add(this.workTimesheet);
 
+		this.dictionaryHumans.setIcon(new ImageIcon(getClass().getResource("/icons/humans.png")));
 		this.menuDictionary.add(this.dictionaryHumans);
 		this.menuDictionary.add(this.dictionaryTime);
 		this.menuDictionary.addSeparator();
@@ -52,6 +62,7 @@ public class StartMenu {
 		setListeners();
 		menuBar.add(this.menuFile);
 		menuBar.add(this.menuDictionary);
+		menuBar.add(this.menuWork);
 		menuBar.add(this.menuOptions);
 		
 	}
