@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -47,6 +48,8 @@ public class Start extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setPreferredSize(new Dimension(1024,768));
 		setResizable(false);
+		ImageIcon img =new ImageIcon(getClass().getResource("/icons/address-book.png"));
+		setIconImage(img.getImage());
 		
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());
