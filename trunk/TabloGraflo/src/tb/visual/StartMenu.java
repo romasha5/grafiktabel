@@ -11,6 +11,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import tb.properties.WhatIsOS;
+import tb.start.Start;
 
 public class StartMenu {
 	
@@ -33,7 +34,7 @@ public class StartMenu {
 	JMenuItem optionsDBProperties = new JMenuItem("DBProperties");
 	
 	void setMenuFile() {
-		this.fileCalc.setIcon(new ImageIcon(getClass().getResource("/icons/сalculator.png")));
+		this.fileCalc.setIcon(new ImageIcon(getClass().getResource("/icons/ator.png")));
 		this.menuFile.add(this.fileCalc);
 		this.fileNotepad.setIcon(new ImageIcon(getClass().getResource("/icons/notepad.png")));
 		this.menuFile.add(this.fileNotepad);
@@ -60,9 +61,9 @@ public class StartMenu {
 		this.menuOptions.add(this.optionsDBProperties);
 	}
 
-	public void menuBuild(JMenuBar menuBar) {
+	public void menuBuild(JMenuBar menuBar, Start str) {
 		setMenuFile();
-		setListeners();
+		setListeners(str);
 		menuBar.add(this.menuFile);
 		menuBar.add(this.menuDictionary);
 		menuBar.add(this.menuWork);
@@ -70,7 +71,7 @@ public class StartMenu {
 		
 	}
 	
-	void setListeners(){
+	void setListeners(Start str){
 		
 		this.fileCalc.addActionListener(new ActionListener() {
 			
@@ -127,6 +128,16 @@ public class StartMenu {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new FormProperties();
+			}
+		});
+		
+		this.dictionaryHumans.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				str.setVisible(false);
+				new FormHumans(str);
+				
 			}
 		});
 	}

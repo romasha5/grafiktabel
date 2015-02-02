@@ -1,5 +1,9 @@
 package tb.visual;
-
+/**Діалогове вікно встановлення параметрів користувачем.
+ * 
+ * @author Roma
+ * 
+ */
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;

@@ -1,5 +1,9 @@
 package tb.properties;
-
+/**З'ясування яка ОС windows чи Linux
+ * 
+ * @author Roma
+ *
+ */
 public class WhatIsOS {
 	
 	static String OS = System.getProperty("os.name").toLowerCase();

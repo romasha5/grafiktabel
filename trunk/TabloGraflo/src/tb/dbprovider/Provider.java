@@ -9,6 +9,11 @@ import tb.properties.userProperties;
 
 import java.io.File;
 
+/**З'єднання з БД за наявності файлу БД 
+ * інакше створення бази
+ * @author Roma
+ *
+ */
 
 public class Provider {
 	
@@ -52,6 +57,7 @@ public class Provider {
 	    }
 	  }
 	
+	//Закриття з'єднання
 	public static void closeDeBase() throws SQLException, ClassNotFoundException
 	  {
 		  c.close();

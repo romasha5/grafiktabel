@@ -1,5 +1,12 @@
 package tb.properties;
 import java.util.prefs.*;
+/**Параметри БД встановлююься 
+ * за замовчуванням за відсутності 
+ * їх в реєстрі інакше просто зчитуються 
+ * або записуються.
+ * @author Roma
+ *
+ */
 
 public class userProperties {
 	
