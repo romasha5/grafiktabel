@@ -38,6 +38,11 @@ public class FormHumans extends JFrame {
 				str.setVisible(true);
 				}
 		});
+		
+		
+		
+		
+		
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());
 
