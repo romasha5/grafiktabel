@@ -29,7 +29,7 @@ public class StartMenu {
 	JMenuItem optionsDBProperties = new JMenuItem("DBProperties");
 	
 	void setMenuFile() {
-		this.fileCalc.setIcon(new ImageIcon(getClass().getResource("/icons/Òalculator.png")));
+		this.fileCalc.setIcon(new ImageIcon(getClass().getResource("/icons/—Åalculator.png")));
 		this.menuFile.add(this.fileCalc);
 		this.fileNotepad.setIcon(new ImageIcon(getClass().getResource("/icons/notepad.png")));
 		this.menuFile.add(this.fileNotepad);
