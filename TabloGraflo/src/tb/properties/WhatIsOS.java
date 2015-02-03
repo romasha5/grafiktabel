@@ -1,7 +1,7 @@
 package tb.properties;
-/**З'ясування яка ОС windows чи Linux
+/**
  * 
- * @author Roma
+ * @author Roman
  *
  */
 public class WhatIsOS {

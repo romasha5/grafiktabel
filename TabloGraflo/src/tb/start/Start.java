@@ -19,7 +19,7 @@ import tb.visual.StartMenu;
 public class Start extends JFrame {
 
 	/**
-	 * Стартовий метод і конструктор основного фрейму.
+	 * 
 	 * @author Roma
 	 * 
 	 */

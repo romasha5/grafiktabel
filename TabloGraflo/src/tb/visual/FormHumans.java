@@ -14,7 +14,6 @@ import tb.start.Start;
 public class FormHumans extends JFrame {
 
 	/**
-	 * Фрейм довідника працівників.
 	 * 
 	 * @author Roma
 	 */
