@@ -56,10 +56,12 @@ public class Provider {
 	    }
 	  }
 	
-	//�������� �'�������
+	
 	public static void closeDeBase() throws SQLException, ClassNotFoundException
 	  {
 		  c.close();
 	  }
-
+	public static void selectDeBase() throws SQLException, ClassNotFoundException{
+		
+	}
 }

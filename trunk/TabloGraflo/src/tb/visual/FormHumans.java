@@ -2,7 +2,6 @@ package tb.visual;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -52,7 +51,7 @@ public class FormHumans extends JFrame {
 
 		
 		
-		this.jt = new JTable(2,3);
+		this.jt = new JTable(2,7);
 		this.jt.setBounds(10, 10, 780, 400);
 		this.jt.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
