@@ -20,7 +20,7 @@ final class CreateDataBase {
 	      stmt = c.createStatement();
 	      sql = "CREATE TABLE [graph] ("
 	      		  + "[ID] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
-	      		  + "[ID_HUMENS] INTEGER NOT NULL,"
+	      		  + "[ID_HUMANS] INTEGER NOT NULL,"
 	      		  + "[ID_REGULATIONS] INTEGER NOT NULL,"
 	      		  + "[1start] TEXT, "
 	      		  + "[1end] TEXT, "
@@ -150,7 +150,7 @@ final class CreateDataBase {
 	      
 	      sql = "CREATE TABLE [tabel] ("
 	      		  + "[ID] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
-	      		  + "[ID_HUMENS] INTEGER NOT NULL,"
+	      		  + "[ID_HUMANS] INTEGER NOT NULL,"
 	      		  + "[ID_REGULATIONS] INTEGER NOT NULL,"
 	      		  + "[1] TEXT, "
 	      		  + "[2] TEXT, "
