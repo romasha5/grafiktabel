@@ -1,6 +1,6 @@
 package tb.dbaseclasses;
 
-public class DbHumans {
+public class DbHumans  {
 	
 	private Integer id;
 	private String lastname;
