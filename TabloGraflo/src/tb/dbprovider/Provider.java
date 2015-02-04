@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import javax.swing.JOptionPane;
 
 import tb.properties.userProperties;
@@ -75,7 +76,7 @@ public class Provider {
 	        stmt = c.createStatement();
 	        
 	        ResultSet rs = stmt.executeQuery( "SELECT * FROM"+ tname );
-	       
+	        
 	        
 	        rs.close();
 	        stmt.close();
