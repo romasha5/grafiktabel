@@ -74,9 +74,6 @@ public class Provider {
 	        
 	        stmt = c.createStatement();
 	        ResultSet rs = stmt.executeQuery( "SELECT * FROM"+ tname );
-	        while ( rs.next() ) {
-	        	
-	        }
 	        rs.close();
 	        stmt.close();
 	        c.close();
