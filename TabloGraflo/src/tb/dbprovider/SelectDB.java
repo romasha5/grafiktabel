@@ -44,8 +44,8 @@ public class SelectDB {
 	        		+ "FROM HUMANS ORDER BY LASTNAME");
 	        ResultSetMetaData rsmd = rs.getMetaData();
 	        namefields = new String[rsmd.getColumnCount()];
-	        for (int i = 1; i < namefields.length; i++) {
-				namefields[i]=rsmd.getColumnName(i);
+	        for (int i = 0; i < namefields.length; i++) {
+				namefields[i]=rsmd.getColumnName(i+1);
 			}
 	        
 	        while(rs.next()){
