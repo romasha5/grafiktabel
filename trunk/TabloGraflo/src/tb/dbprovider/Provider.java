@@ -1,10 +1,7 @@
 package tb.dbprovider;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 import javax.swing.JOptionPane;
 
 import tb.properties.userProperties;
@@ -19,7 +16,6 @@ import java.io.File;
 public class Provider {
 	
 	private static Connection c;
-	private static Statement stmt;
 	
 	public static void connectToDeBase(String cs)
 	  {
@@ -64,25 +60,4 @@ public class Provider {
 	  {
 		  c.close();
 	  }
-	public static void selectDeBase(String tname) throws SQLException, ClassNotFoundException{
-	    c = null;
-	    stmt = null;
-	    userProperties up = new userProperties();
-	    try {
-	        Class.forName("org.sqlite.JDBC");
-	        c = DriverManager.getConnection(up.getConStr());
-	        c.setAutoCommit(false);
-	        
-	        stmt = c.createStatement();
-	        
-	        ResultSet rs = stmt.executeQuery( "SELECT * FROM"+ tname );
-	        
-	        
-	        rs.close();
-	        stmt.close();
-	        c.close();
-	      } catch ( Exception e ) {
-	        JOptionPane.showMessageDialog(null,e.getClass().getName() + ": " + e.getMessage() );
-	      }
-	}
 }

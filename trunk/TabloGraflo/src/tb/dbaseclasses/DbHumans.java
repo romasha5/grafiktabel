@@ -10,7 +10,7 @@ public class DbHumans  {
 	private Integer tablenumber;
 	private Float percent;
 	private String sex;
-	private DbTime id_time;
+	private Integer id_time;
 	
 	public String getLastname() {
 		return lastname;
@@ -54,14 +54,17 @@ public class DbHumans  {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	public DbTime getId_time() {
+	public Integer getId_time() {
 		return id_time;
 	}
-	public void setId_time(DbTime id_time) {
+	public void setId_time(Integer id_time) {
 		this.id_time = id_time;
 	}
 	public Integer getId() {
 		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 	
