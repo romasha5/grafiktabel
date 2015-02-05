@@ -11,10 +11,16 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
+import tb.dbaseclasses.DbHumans;
+import tb.dbprovider.SelectDB;
 import tb.start.Start;
 
 public class FormHumans extends JFrame {
@@ -40,9 +46,9 @@ public class FormHumans extends JFrame {
 		setResizable(false);
 		ImageIcon img =new ImageIcon(getClass().getResource("/icons/address-book.png"));
 		setIconImage(img.getImage());
-		this.contentPane = new JPanel();
-		setContentPane(this.contentPane);
-		this.contentPane.setLayout(null);
+		contentPane = new JPanel();
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
 		
 		addWindowListener(new WindowAdapter() {
@@ -52,31 +58,39 @@ public class FormHumans extends JFrame {
 				}
 		});
 
+		SelectDB sdb = new SelectDB();
+		ArrayList<DbHumans> listDBH = null;
+		try {
+			listDBH= sdb.queryDbHumans();
+			//JOptionPane.showMessageDialog(null, sdb.namefields[1]);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		
+		
+		
+		DefaultTableModel model = new DefaultTableModel(sdb.namefields,300);
 
+		jt = new JTable(model);	
 		
 		
+		jt.setBounds(10, 50, 780, 400);
+		jt.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		this.jt = new JTable(2,7);
-		this.jt.setBounds(10, 10, 780, 400);
-		this.jt.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		jsp = new JScrollPane(jt);
+		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
-		this.jsp = new JScrollPane(jt);
-		
-		
-		this.contentPane.add(jt);
-		this.contentPane.add(jsp);
-		
-		
-		
+		contentPane.add(jt);
+		contentPane.add(jsp);
 		
 		pack();
 		setLocationRelativeTo(null);
-		
+
 		setVisible(true);
 		
 	}
-	
 	
 	
 }
