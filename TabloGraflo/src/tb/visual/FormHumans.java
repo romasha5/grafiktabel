@@ -11,13 +11,10 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import tb.dbaseclasses.DbHumans;
-import tb.dbprovider.SelectDB;
 import tb.start.Start;
 
 public class FormHumans extends JFrame {
@@ -56,19 +53,7 @@ public class FormHumans extends JFrame {
 		});
 
 		
-		SelectDB sdb = new SelectDB();
-		try {
-			ArrayList<DbHumans> ldbh = sdb.queryDbHumans();
-			for (DbHumans dbHumans : ldbh) {
-				JOptionPane.showMessageDialog(null, dbHumans.toString());
-			}
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+
 		
 		
 		
