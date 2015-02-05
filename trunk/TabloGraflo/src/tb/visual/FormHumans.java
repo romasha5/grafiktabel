@@ -71,19 +71,19 @@ public class FormHumans extends JFrame {
 		
 		
 		
-		DefaultTableModel model = new DefaultTableModel(sdb.namefields,300);
-
-		jt = new JTable(model);	
-		
-		
-		jt.setBounds(10, 50, 780, 400);
-		jt.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
+		DefaultTableModel model = new DefaultTableModel();
+		for (int i = 0; i < sdb.namefields.length; i++) {
+			model.addColumn(sdb.namefields[i]);
+		}
 		jsp = new JScrollPane(jt);
+		jsp.setBounds(10, 10, 780, 400);
 		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		
-		contentPane.add(jt);
 		contentPane.add(jsp);
+		
+		jt = new JTable(model);
+		jsp.setViewportView(jt);
+		
+		JOptionPane.showMessageDialog(null, sdb.namefields.length);
 		
 		pack();
 		setLocationRelativeTo(null);
