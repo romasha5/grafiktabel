@@ -12,6 +12,7 @@ public class DbHumans  {
 	private String sex;
 	private Integer id_time;
 	
+	
 	public String getLastname() {
 		return lastname;
 	}
