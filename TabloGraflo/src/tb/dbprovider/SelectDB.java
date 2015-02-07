@@ -41,7 +41,7 @@ public class SelectDB {
 	        		+ "PERCENT AS \"%\","
 	        		+ "SEX AS \"СТАТЬ\","
 	        		+ "ID_TIME AS \"ЧГ\" "
-	        		+ "FROM HUMANS ORDER BY LASTNAME");
+	        		+ "FROM HUMANS ORDER BY ID");
 	        ResultSetMetaData rsmd = rs.getMetaData();
 	        namefields = new String[rsmd.getColumnCount()];
 	        for (int i = 0; i < namefields.length; i++) {
