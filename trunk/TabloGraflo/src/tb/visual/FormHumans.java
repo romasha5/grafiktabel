@@ -101,7 +101,8 @@ public class FormHumans extends JFrame {
 		for (int i = 0; i < sdb.namefields.length; i++) {
 			model.addColumn(sdb.namefields[i]);			
 		}
-
+	
+		
 		for(int i = 0; i < listDBH.size(); i++){
 				rowdatas[i][0]=listDBH.get(i).getId();
 				rowdatas[i][1]=listDBH.get(i).getLastname();
