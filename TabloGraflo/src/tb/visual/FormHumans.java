@@ -156,8 +156,44 @@ public class FormHumans extends JFrame {
 		
 		this.jtlastname = new JTextField();
 		this.jtlastname.setFont(new Font("Tahoma", Font.BOLD, 14));
-		this.jtlastname.setBounds(105, 415, 150, 20);
+		this.jtlastname.setBounds(125, 415, 150, 20);
+		this.jtlastname.setEditable(false);
 		this.contentPane.add(this.jtlastname);
+		
+		this.jlname = new JLabel(sdb.namefields[2]+":");
+		this.jlname.setBounds(10, 440, 100, 20);
+		this.jlname.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.contentPane.add(this.jlname);
+		
+		this.jtname = new JTextField();
+		this.jtname.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.jtname.setBounds(125, 440, 150, 20);
+		this.jtname.setEditable(false);
+		this.contentPane.add(this.jtname);
+		
+		this.jlfathersname = new JLabel(sdb.namefields[3]+":");
+		this.jlfathersname.setBounds(10, 465, 150, 20);
+		this.jlfathersname.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.contentPane.add(this.jlfathersname);
+		
+		this.jtfathersname = new JTextField();
+		this.jtfathersname.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.jtfathersname.setBounds(125, 465, 150, 20);
+		this.jtfathersname.setEditable(false);
+		this.contentPane.add(this.jtfathersname);
+		
+		this.jlposition = new JLabel(sdb.namefields[4]+":");
+		this.jlposition.setBounds(10, 490, 150, 20);
+		this.jlposition.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.contentPane.add(this.jlposition);
+		
+		this.jtposition = new JTextField();
+		this.jtposition.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.jtposition.setBounds(125, 490, 150, 20);
+		this.jtposition.setEditable(false);
+		this.contentPane.add(this.jtposition);
+		
+
 	}
 	
 }
