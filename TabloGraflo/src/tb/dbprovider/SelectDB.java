@@ -47,6 +47,11 @@ public class SelectDB {
 	        for (int i = 0; i < namefields.length; i++) {
 				namefields[i]=rsmd.getColumnName(i+1);
 			}
+
+	        ResultSet rstime = stmt.executeQuery("SELECT * FROM TIME ORDER BY ID");
+
+
+	        
 	        
 	        while(rs.next()){
 	        	DbHumans dbh = new DbHumans();
@@ -58,7 +63,10 @@ public class SelectDB {
 	        	dbh.setTablenumber(rs.getInt(rsmd.getColumnName(6)));
 	        	dbh.setPercent(rs.getFloat(rsmd.getColumnName(7)));
 	        	dbh.setSex(rs.getString(rsmd.getColumnName(8)));
-	        	dbh.setId_time(rs.getInt(rsmd.getColumnName(9)));
+	        		while(rstime.next()){
+	        			if(rstime.getInt(1)==rs.getInt(rsmd.getColumnName(9)))
+	        				dbh.setId_time(rs.getInt(rsmd.getColumnName(9)),rstime.getString(2));
+	        		}
 	        	listDBH.add(dbh);
 	        }
 	        
