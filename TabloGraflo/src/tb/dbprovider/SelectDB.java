@@ -65,11 +65,13 @@ public class SelectDB {
 	        	dbh.setSex(rs.getString(rsmd.getColumnName(8)));
 	        		while(rstime.next()){
 	        			if(rstime.getInt(1)==rs.getInt(rsmd.getColumnName(9)))
-	        				dbh.setId_time(rs.getInt(rsmd.getColumnName(9)),rstime.getString(2));
+	        			dbh.setId_time(rs.getInt(rsmd.getColumnName(9)),rstime.getString(2));
+	        			JOptionPane.showMessageDialog(null, rstime.getString(0));
 	        		}
 	        	listDBH.add(dbh);
 	        }
 	        
+	        rstime.close();
 	        rs.close();
 	        stmt.close();
 	        c.close();
