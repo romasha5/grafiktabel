@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -51,7 +52,7 @@ public class FormHumans extends JFrame {
 	JTextField jtposition;
 	JTextField jttablenumber;
 	JTextField jtpercent;
-	JTextField jtsex;
+	JComboBox<Sex> jtsex;
 	JTextField jtidname;
 	
 	JButton jbadd;
@@ -193,7 +194,39 @@ public class FormHumans extends JFrame {
 		this.jtposition.setEditable(false);
 		this.contentPane.add(this.jtposition);
 		
-
+		this.jltablenumber = new JLabel(sdb.namefields[5]+":");
+		this.jltablenumber.setBounds(10, 515, 150, 20);
+		this.jltablenumber.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.contentPane.add(this.jltablenumber);
+		
+		this.jttablenumber = new JTextField();
+		this.jttablenumber.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.jttablenumber.setBounds(125, 515, 150, 20);
+		this.jttablenumber.setEditable(false);
+		this.contentPane.add(this.jttablenumber);
+		
+		this.jlpercent = new JLabel(sdb.namefields[6]+":");
+		this.jlpercent.setBounds(10, 540, 150, 20);
+		this.jlpercent.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.contentPane.add(this.jlpercent);
+		
+		this.jtpercent = new JTextField();
+		this.jtpercent.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.jtpercent.setBounds(125, 540, 150, 20);
+		this.jtpercent.setEditable(false);
+		this.contentPane.add(this.jtpercent);
+		
+		this.jlsex = new JLabel(sdb.namefields[7]+":");
+		this.jlsex.setBounds(10, 565, 150, 20);
+		this.jlsex.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.contentPane.add(this.jlsex);
+		
+		this.jtsex = new JComboBox<Sex>(Sex.values());
+		this.jtsex.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.jtsex.setBounds(125, 565, 150, 20);
+		//this.jtsex.setEditable(false);
+		this.contentPane.add(this.jtsex);
+		
 	}
 	
 }

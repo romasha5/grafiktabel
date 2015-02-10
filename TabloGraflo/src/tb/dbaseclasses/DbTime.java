@@ -2,6 +2,8 @@ package tb.dbaseclasses;
 
 public class DbTime {
 
+
+
 	private Integer id;
 	private String name;
 	
@@ -17,5 +19,7 @@ public class DbTime {
 		return id;
 	}
 	
-
+	public void setId(Integer id) {
+		this.id = id;
+	}
 }
