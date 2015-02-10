@@ -17,6 +17,7 @@ public class SelectDB {
 	
 	private static Connection c;
 	private static Statement stmt;
+	private static Statement stmt2;
 	public String[] namefields;
 	
 	
@@ -24,6 +25,7 @@ public class SelectDB {
 		ArrayList<DbHumans> listDBH = new ArrayList<DbHumans>();
 		c = null;
 	    stmt = null;
+	    stmt2 =null;
 	    userProperties up = new userProperties();
 	    try {
 	        Class.forName("org.sqlite.JDBC");
@@ -47,13 +49,14 @@ public class SelectDB {
 	        for (int i = 0; i < namefields.length; i++) {
 				namefields[i]=rsmd.getColumnName(i+1);
 			}
+	        stmt2 = c.createStatement();
+	        ResultSet rstime = stmt2.executeQuery("SELECT * FROM TIME ORDER BY ID");
 
-	        ResultSet rstime = stmt.executeQuery("SELECT * FROM TIME ORDER BY ID");
-
-
-	        
+			JOptionPane.showMessageDialog(null, rstime.getInt(1)+rstime.getInt(2));
+			
 	        
 	        while(rs.next()){
+	    		
 	        	DbHumans dbh = new DbHumans();
 	        	dbh.setId(rs.getInt(rsmd.getColumnName(1)));
 	        	dbh.setLastname(rs.getString(rsmd.getColumnName(2)));
@@ -64,9 +67,8 @@ public class SelectDB {
 	        	dbh.setPercent(rs.getFloat(rsmd.getColumnName(7)));
 	        	dbh.setSex(rs.getString(rsmd.getColumnName(8)));
 	        		while(rstime.next()){
-	        			if(rstime.getInt(0)==rs.getInt(rsmd.getColumnName(9)))
-	        			dbh.setId_time(rs.getInt(rsmd.getColumnName(9)),rstime.getString(1));
-	        			JOptionPane.showMessageDialog(null, rstime.getString(0));
+	        			if(rstime.getInt(1)==rs.getInt(rsmd.getColumnName(9)))
+	        			dbh.setId_time(rs.getInt(1),rstime.getString(2));
 	        		}
 	        	listDBH.add(dbh);
 	        }
@@ -74,6 +76,7 @@ public class SelectDB {
 	        rstime.close();
 	        rs.close();
 	        stmt.close();
+	        stmt2.close();
 	        c.close();
 	      } catch ( Exception e ) {
 	        JOptionPane.showMessageDialog(null,e.getClass().getName() + ": " + e.getMessage() );
