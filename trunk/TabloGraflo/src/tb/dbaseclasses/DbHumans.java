@@ -10,7 +10,8 @@ public class DbHumans  {
 	private Integer tablenumber;
 	private Float percent;
 	private String sex;
-	private DbTime time;
+	private Integer timeId;
+	private String timeName;
 	
 	
 	public String getLastname() {
@@ -55,12 +56,19 @@ public class DbHumans  {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	public DbTime getId_time() {
-		return time;
+	
+
+	public Integer getTimeId() {
+		return timeId;
 	}
-	public void setId_time(Integer id_time,String name_time) {
-		this.time.setId(id_time);
-		this.time.setName(name_time);
+	public void setTimeId(Integer timeId) {
+		this.timeId = timeId;
+	}
+	public String getTimeName() {
+		return timeName;
+	}
+	public void setTimeName(String timeName) {
+		this.timeName = timeName;
 	}
 	public Integer getId() {
 		return id;

@@ -17,7 +17,6 @@ public class SelectDB {
 	
 	private static Connection c;
 	private static Statement stmt;
-	private static Statement stmt2;
 	public String[] namefields;
 	
 	
@@ -25,7 +24,6 @@ public class SelectDB {
 		ArrayList<DbHumans> listDBH = new ArrayList<DbHumans>();
 		c = null;
 	    stmt = null;
-	    stmt2 =null;
 	    userProperties up = new userProperties();
 	    try {
 	        Class.forName("org.sqlite.JDBC");
@@ -34,26 +32,25 @@ public class SelectDB {
 	        
 	        stmt = c.createStatement();
 	        
-	        ResultSet rs = stmt.executeQuery("SELECT ID AS \"#\","
-	        		+ "LASTNAME AS \"ПРІЗВИЩЕ\","
-	        		+ "NAME AS \"ІМ'Я\","
-	        		+ "FATHERSNAME AS \"ПО-БАТЬКОВІ\","
-	        		+ "POSITION AS \"ПОСАДА\","
-	        		+ "TABLENUMBER AS \"ТН\","
-	        		+ "PERCENT AS \"%\","
-	        		+ "SEX AS \"СТАТЬ\","
-	        		+ "ID_TIME AS \"РГ\" "
-	        		+ "FROM HUMANS ORDER BY ID");
+	        ResultSet rs = stmt.executeQuery("SELECT HUMANS.[id] AS \"#\","
+	        		+ "HUMANS.[lastname] AS \"ПРІЗВИЩЕ\","
+	        		+ "HUMANS.[name] AS \"ІМ'Я\","
+	        		+ "HUMANS.[fathersname] AS \"ПО-БАТЬКОВІ\","
+	        		+ "HUMANS.[position] AS \"ПОСАДА\","
+	        		+ "HUMANS.[tablenumber] AS \"ТН\","
+	        		+ "HUMANS.[percent] AS \"%\","
+	        		+ "HUMANS.[sex] AS \"СТАТЬ\","
+	        		+ "HUMANS.[IDTIME] AS \"РГ\","
+	        		+ "TIME.[NAME] AS \"ГРАФІК\""
+	        		+ "FROM HUMANS LEFT JOIN TIME "
+	        		+ "ON HUMANS.IDTIME=TIME.ID ORDER BY HUMANS.[id]");
+	        
 	        ResultSetMetaData rsmd = rs.getMetaData();
+	        
 	        namefields = new String[rsmd.getColumnCount()];
 	        for (int i = 0; i < namefields.length; i++) {
 				namefields[i]=rsmd.getColumnName(i+1);
-			}
-	        stmt2 = c.createStatement();
-	        ResultSet rstime = stmt2.executeQuery("SELECT * FROM TIME ORDER BY ID");
-
-			JOptionPane.showMessageDialog(null, rstime.getInt(1)+rstime.getInt(2));
-			
+			}				
 	        
 	        while(rs.next()){
 	    		
@@ -65,18 +62,15 @@ public class SelectDB {
 	        	dbh.setPosition(rs.getString(rsmd.getColumnName(5)));
 	        	dbh.setTablenumber(rs.getInt(rsmd.getColumnName(6)));
 	        	dbh.setPercent(rs.getFloat(rsmd.getColumnName(7)));
-	        	dbh.setSex(rs.getString(rsmd.getColumnName(8)));
-	        		while(rstime.next()){
-	        			if(rstime.getInt(1)==rs.getInt(rsmd.getColumnName(9)))
-	        			dbh.setId_time(rs.getInt(1),rstime.getString(2));
-	        		}
+	        	dbh.setSex(rs.getString(rsmd.getColumnName(8)));	        	
+	        	dbh.setTimeId(rs.getInt(rsmd.getColumnName(9)));
+	        	dbh.setTimeName(rs.getString(rsmd.getColumnName(10)));
+
 	        	listDBH.add(dbh);
 	        }
 	        
-	        rstime.close();
 	        rs.close();
 	        stmt.close();
-	        stmt2.close();
 	        c.close();
 	      } catch ( Exception e ) {
 	        JOptionPane.showMessageDialog(null,e.getClass().getName() + ": " + e.getMessage() );
