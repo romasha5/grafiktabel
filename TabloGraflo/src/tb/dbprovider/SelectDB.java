@@ -64,8 +64,8 @@ public class SelectDB {
 	        	dbh.setPercent(rs.getFloat(rsmd.getColumnName(7)));
 	        	dbh.setSex(rs.getString(rsmd.getColumnName(8)));
 	        		while(rstime.next()){
-	        			if(rstime.getInt(1)==rs.getInt(rsmd.getColumnName(9)))
-	        			dbh.setId_time(rs.getInt(rsmd.getColumnName(9)),rstime.getString(2));
+	        			if(rstime.getInt(0)==rs.getInt(rsmd.getColumnName(9)))
+	        			dbh.setId_time(rs.getInt(rsmd.getColumnName(9)),rstime.getString(1));
 	        			JOptionPane.showMessageDialog(null, rstime.getString(0));
 	        		}
 	        	listDBH.add(dbh);
