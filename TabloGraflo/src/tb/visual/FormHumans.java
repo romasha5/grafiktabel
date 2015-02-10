@@ -98,6 +98,8 @@ public class FormHumans extends JFrame {
 		
 		rowdatas = new Object[listDBH.size()][sdb.namefields.length];
 		DefaultTableModel model = new DefaultTableModel();
+		
+		
 
 		for (int i = 0; i < sdb.namefields.length; i++) {
 			model.addColumn(sdb.namefields[i]);			
@@ -113,7 +115,8 @@ public class FormHumans extends JFrame {
 				rowdatas[i][5]=listDBH.get(i).getTablenumber();
 				rowdatas[i][6]=listDBH.get(i).getPercent();
 				rowdatas[i][7]=listDBH.get(i).getSex();
-				rowdatas[i][8]=listDBH.get(i).getId_time().getName();
+				rowdatas[i][8]=listDBH.get(i).getTimeId();
+				rowdatas[i][9]=listDBH.get(i).getTimeName();
 			model.addRow(rowdatas[i]);
 		}
 
@@ -135,6 +138,8 @@ public class FormHumans extends JFrame {
             }
         };;
 		jsp.setViewportView(jt);
+		
+		jt.removeColumn(jt.getColumnModel().getColumn(8));
 		
 	    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
 	    jt.setRowSorter(sorter);
