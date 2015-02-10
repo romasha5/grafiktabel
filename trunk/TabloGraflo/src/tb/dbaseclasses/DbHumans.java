@@ -58,8 +58,9 @@ public class DbHumans  {
 	public DbTime getId_time() {
 		return time;
 	}
-	public void setId_time(DbTime time) {
-		this.time=time;
+	public void setId_time(Integer id_time,String name_time) {
+		this.time.setId(id_time);
+		this.time.setName(name_time);
 	}
 	public Integer getId() {
 		return id;

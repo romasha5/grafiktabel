@@ -113,7 +113,7 @@ public class FormHumans extends JFrame {
 				rowdatas[i][5]=listDBH.get(i).getTablenumber();
 				rowdatas[i][6]=listDBH.get(i).getPercent();
 				rowdatas[i][7]=listDBH.get(i).getSex();
-				rowdatas[i][8]=listDBH.get(i).getId_time();
+				rowdatas[i][8]=listDBH.get(i).getId_time().getName();
 			model.addRow(rowdatas[i]);
 		}
 
