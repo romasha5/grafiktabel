@@ -78,5 +78,37 @@ public class SelectDB {
 		return listDBH;
 		
 	}
-
+	
+	public void queryDbTime() throws SQLException, ClassNotFoundException{
+		c = null;
+	    stmt = null;
+	    userProperties up = new userProperties();
+	    try {
+	        Class.forName("org.sqlite.JDBC");
+	        c = DriverManager.getConnection(up.getConStr());
+	        c.setAutoCommit(false);
+	        
+	        stmt = c.createStatement();
+	        
+	        ResultSet rs = stmt.executeQuery("");
+	        
+	        ResultSetMetaData rsmd = rs.getMetaData();
+	        
+	        namefields = new String[rsmd.getColumnCount()];
+	        for (int i = 0; i < namefields.length; i++) {
+				namefields[i]=rsmd.getColumnName(i+1);
+			}				
+	        
+	        while(rs.next()){
+	    		
+	       
+	        }
+	        
+	        rs.close();
+	        stmt.close();
+	        c.close();
+	      } catch ( Exception e ) {
+	        JOptionPane.showMessageDialog(null,e.getClass().getName() + ": " + e.getMessage() );
+	      }
+	}
 }
