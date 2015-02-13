@@ -101,7 +101,7 @@ public class SelectDB {
 	        	dbt.setName(rs.getString(2));
 	        	listDBT.add(dbt);
 	        }
-	              
+	        timefields = new String[listDBT.size()];      
 	        for (int i = 0; i < listDBT.size(); i++) {
 				timefields[i]=listDBT.get(i).getName();
 			}				

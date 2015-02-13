@@ -140,7 +140,7 @@ public class FormHumans extends JFrame {
 		jsp.setViewportView(jt);
 		
 		jt.removeColumn(jt.getColumnModel().getColumn(8));
-		
+		jt.getTableHeader().setReorderingAllowed(false);
 	    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
 	    jt.setRowSorter(sorter);
 		jt.getColumnModel().getColumn(0).setPreferredWidth(20);
@@ -237,7 +237,7 @@ public class FormHumans extends JFrame {
 		this.jtsex = new JComboBox<Sex>(Sex.values());
 		this.jtsex.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtsex.setBounds(360, 465, 150, 20);
-		//this.jtsex.setEditable(false);
+		this.jtsex.setEnabled(false);
 		this.contentPane.add(this.jtsex);
 		
 		this.jlidname = new JLabel(sdb.namefields[9]+":");
@@ -252,7 +252,7 @@ public class FormHumans extends JFrame {
 		
 		this.jtidname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtidname.setBounds(360, 490, 150, 20);
-		//this.jtsex.setEditable(false);
+		this.jtidname.setEnabled(false);
 		this.contentPane.add(this.jtidname);
 	}
 	
