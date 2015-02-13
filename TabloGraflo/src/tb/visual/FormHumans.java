@@ -53,7 +53,7 @@ public class FormHumans extends JFrame {
 	JTextField jttablenumber;
 	JTextField jtpercent;
 	JComboBox<Sex> jtsex;
-	JTextField jtidname;
+	JComboBox<String> jtidname;
 	
 	JButton jbadd;
 	JButton jbchange;
@@ -144,6 +144,14 @@ public class FormHumans extends JFrame {
 	    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
 	    jt.setRowSorter(sorter);
 		jt.getColumnModel().getColumn(0).setPreferredWidth(20);
+		
+		try {
+			sdb.queryDbTime();
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		
 		setJTtextFields();
 		
@@ -237,7 +245,15 @@ public class FormHumans extends JFrame {
 		this.jlidname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.contentPane.add(this.jlidname);
 		
+		this.jtidname = new JComboBox<String>();
+		for (int i = 0; i < sdb.timefields.length; i++) {
+			this.jtidname.addItem(sdb.timefields[i]);
+		}
 		
+		this.jtidname.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.jtidname.setBounds(360, 490, 150, 20);
+		//this.jtsex.setEditable(false);
+		this.contentPane.add(this.jtidname);
 	}
 	
 }
