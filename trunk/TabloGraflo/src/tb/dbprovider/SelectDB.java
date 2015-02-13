@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import tb.dbaseclasses.DbHumans;
+import tb.dbaseclasses.DbTime;
 import tb.properties.userProperties;
 
 public class SelectDB {
@@ -18,6 +19,7 @@ public class SelectDB {
 	private static Connection c;
 	private static Statement stmt;
 	public String[] namefields;
+	public String[] timefields;
 	
 	
 	public  ArrayList<DbHumans> queryDbHumans() throws SQLException, ClassNotFoundException{
@@ -80,6 +82,7 @@ public class SelectDB {
 	}
 	
 	public void queryDbTime() throws SQLException, ClassNotFoundException{
+		ArrayList<DbTime> listDBT = new ArrayList<DbTime>();
 		c = null;
 	    stmt = null;
 	    userProperties up = new userProperties();
@@ -90,19 +93,19 @@ public class SelectDB {
 	        
 	        stmt = c.createStatement();
 	        
-	        ResultSet rs = stmt.executeQuery("");
-	        
-	        ResultSetMetaData rsmd = rs.getMetaData();
-	        
-	        namefields = new String[rsmd.getColumnCount()];
-	        for (int i = 0; i < namefields.length; i++) {
-				namefields[i]=rsmd.getColumnName(i+1);
-			}				
+	        ResultSet rs = stmt.executeQuery("select * from time order by name");
 	        
 	        while(rs.next()){
-	    		
-	       
+	        	DbTime dbt = new DbTime();
+	        	dbt.setId(rs.getInt(1));
+	        	dbt.setName(rs.getString(2));
+	        	listDBT.add(dbt);
 	        }
+	              
+	        for (int i = 0; i < listDBT.size(); i++) {
+				timefields[i]=listDBT.get(i).getName();
+			}				
+	        
 	        
 	        rs.close();
 	        stmt.close();
