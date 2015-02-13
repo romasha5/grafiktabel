@@ -50,7 +50,7 @@ public class FormProperties extends JDialog {
 		jd.setPreferredSize(new Dimension(600,185));
 		jd.setResizable(false);
 		jd.setModal(true);
-		jd.setTitle("Properties");
+		jd.setTitle("Налаштування БД");
 		ImageIcon img =new ImageIcon(getClass().getResource("/icons/address-book.png"));
 		jd.setIconImage(img.getImage());
 		
@@ -59,7 +59,7 @@ public class FormProperties extends JDialog {
 		jd.add(contentPane);
 		this.contentPane.setLayout(null);
 		
-		this.jl1 = new JLabel("DBase Path:");
+		this.jl1 = new JLabel("Шлях БД:");
 		this.jl1.setBounds(10, 70, 150, 20);
 		this.jl1.setFont(new Font("Tahoma", Font.BOLD, 14));;
 		this.contentPane.add(this.jl1);
@@ -104,7 +104,7 @@ public class FormProperties extends JDialog {
 		this.jbChange.setBounds(563, 68, 27, 20);
 		this.contentPane.add(jbChange);
 		
-		this.jbStringBuilder = new JButton("BuildString");
+		this.jbStringBuilder = new JButton("Побудувати CS");
 		this.jbStringBuilder.addActionListener(new ActionListener() {
 			
 			@Override
@@ -119,7 +119,7 @@ public class FormProperties extends JDialog {
 		this.contentPane.add(jbStringBuilder);
 		
 		
-		this.jbSave = new JButton("Save");
+		this.jbSave = new JButton("Зберегти");
 		this.jbSave.addActionListener(new ActionListener() {
 			
 			@Override
@@ -132,7 +132,7 @@ public class FormProperties extends JDialog {
 		this.jbSave.setIcon(new ImageIcon(getClass().getResource("/icons/save.png")));
 		this.contentPane.add(jbSave);
 		
-		this.jbExit = new JButton("Exit");
+		this.jbExit = new JButton("Вихід");
 		this.jbExit.addActionListener(new ActionListener() {
 			
 			@Override
