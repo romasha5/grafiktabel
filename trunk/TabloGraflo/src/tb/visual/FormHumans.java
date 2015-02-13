@@ -3,6 +3,8 @@ package tb.visual;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -17,6 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -58,8 +63,11 @@ public class FormHumans extends JFrame {
 	JButton jbadd;
 	JButton jbchange;
 	JButton jbcopy;
+	JButton jbdelete;
 	JButton jbimport;
+	JButton jbexpert;
 	JButton jbsave;
+	JButton jbexit;
 
 	SelectDB sdb;
 	private Object[][] rowdatas;	
@@ -81,21 +89,20 @@ public class FormHumans extends JFrame {
 		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				dispose();
-				str.setVisible(true);
+					closeApp(str);
 				}
 		});
 
 		sdb = new SelectDB();
-		ArrayList<DbHumans> listDBH = null;
+		
 		try {
-			listDBH= sdb.queryDbHumans();
+			sdb.queryDbHumans();
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		
+		ArrayList<DbHumans> listDBH = sdb.listDBH;
 		rowdatas = new Object[listDBH.size()][sdb.namefields.length];
 		DefaultTableModel model = new DefaultTableModel();
 		
@@ -144,6 +151,17 @@ public class FormHumans extends JFrame {
 	    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
 	    jt.setRowSorter(sorter);
 		jt.getColumnModel().getColumn(0).setPreferredWidth(20);
+		jt.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jt.setRowSelectionInterval(0, 0);
+		
+		jt.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				jtmode();
+				
+			}
+		});
 		
 		try {
 			sdb.queryDbTime();
@@ -153,8 +171,8 @@ public class FormHumans extends JFrame {
 			e1.printStackTrace();
 		}
 		
-		setJTtextFields();
-		
+		setJTtextFields(str);
+		jtmode();
 		pack();
 		setLocationRelativeTo(null);
 
@@ -162,7 +180,7 @@ public class FormHumans extends JFrame {
 		
 	}
 	
-	public void setJTtextFields() {
+	public void setJTtextFields(Start str) {
 		this.jllastname = new JLabel(sdb.namefields[1]+":");
 		this.jllastname.setBounds(10, 415, 100, 20);
 		this.jllastname.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -254,6 +272,67 @@ public class FormHumans extends JFrame {
 		this.jtidname.setBounds(360, 490, 150, 20);
 		this.jtidname.setEnabled(false);
 		this.contentPane.add(this.jtidname);
+		
+		this.jbadd = new JButton("Додати");
+		this.jbadd.setBounds(530, 415, 100, 20);
+		this.contentPane.add(jbadd);
+		
+		this.jbchange = new JButton("Змінити");
+		this.jbchange.setBounds(530, 440, 100, 20);
+		this.contentPane.add(jbchange);
+		
+		this.jbdelete = new JButton("Видалити");
+		this.jbdelete.setBounds(530, 465, 100, 20);
+		this.contentPane.add(jbdelete);
+		
+		this.jbsave = new JButton("Зберегти");
+		this.jbsave.setBounds(530, 490, 100, 20);
+		this.jbsave.setEnabled(false);
+		this.contentPane.add(jbsave);
+		
+		this.jbimport = new JButton("Імпорт");
+		this.jbimport.setBounds(635, 415, 100, 45);
+		this.contentPane.add(jbimport);
+		
+		this.jbexpert = new JButton("Ехпорт");
+		this.jbexpert.setBounds(635, 465, 100, 45);
+		this.contentPane.add(jbexpert);
+		
+		this.jbexit = new JButton();
+		this.jbexit.setIcon(new ImageIcon(getClass().getResource("/icons/door.png")));
+		this.jbexit.setBounds(740, 415, 50, 95);
+		this.contentPane.add(jbexit);
+		
+		this.jbexit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				closeApp(str);	
+			}
+		});
 	}
 	
+	public void jtmode(){
+		int sr = jt.getSelectedRow();
+		jtlastname.setText(jt.getValueAt(sr, 1).toString());
+		jtname.setText(jt.getValueAt(sr, 2).toString());
+		jtfathersname.setText(jt.getValueAt(sr, 3).toString());
+		jtposition.setText(jt.getValueAt(sr, 4).toString());
+		jttablenumber.setText(jt.getValueAt(sr, 5).toString());
+		jtpercent.setText(jt.getValueAt(sr, 6).toString());
+		
+		if (jt.getValueAt(sr, 7).toString().length()==7) {
+			jtsex.setSelectedItem(Sex.Чоловік);
+		}
+		else {
+			jtsex.setSelectedItem(Sex.Жінка);
+		}
+		
+		jtidname.setSelectedItem(jt.getValueAt(sr, 8).toString());
+	}
+	
+	public void closeApp(Start str){
+		dispose();
+		str.setVisible(true);
+	}
 }

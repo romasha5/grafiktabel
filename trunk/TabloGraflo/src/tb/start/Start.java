@@ -52,6 +52,7 @@ public class Start extends JFrame {
 		setResizable(false);
 		ImageIcon img =new ImageIcon(getClass().getResource("/icons/address-book.png"));
 		setIconImage(img.getImage());
+		setTitle("Графік&Табель");
 		
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());

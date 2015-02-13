@@ -20,10 +20,11 @@ public class SelectDB {
 	private static Statement stmt;
 	public String[] namefields;
 	public String[] timefields;
+	public ArrayList<DbHumans> listDBH;
+	public ArrayList<DbTime> listDBT;
 	
-	
-	public  ArrayList<DbHumans> queryDbHumans() throws SQLException, ClassNotFoundException{
-		ArrayList<DbHumans> listDBH = new ArrayList<DbHumans>();
+	public  void queryDbHumans() throws SQLException, ClassNotFoundException{
+		listDBH = new ArrayList<DbHumans>();
 		c = null;
 	    stmt = null;
 	    userProperties up = new userProperties();
@@ -77,12 +78,11 @@ public class SelectDB {
 	      } catch ( Exception e ) {
 	        JOptionPane.showMessageDialog(null,e.getClass().getName() + ": " + e.getMessage() );
 	      }
-		return listDBH;
 		
 	}
 	
 	public void queryDbTime() throws SQLException, ClassNotFoundException{
-		ArrayList<DbTime> listDBT = new ArrayList<DbTime>();
+		listDBT = new ArrayList<DbTime>();
 		c = null;
 	    stmt = null;
 	    userProperties up = new userProperties();

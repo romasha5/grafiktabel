@@ -15,23 +15,23 @@ import tb.start.Start;
 
 public class StartMenu {
 	
-	JMenu menuFile = new JMenu("File");
-	JMenuItem fileCalc = new JMenuItem ("Calc");
-	JMenuItem fileNotepad = new JMenuItem ("Notepad");
-	JMenuItem fileExit = new JMenuItem ("Exit");
+	JMenu menuFile = new JMenu("Файл");
+	JMenuItem fileCalc = new JMenuItem ("Калькулятор");
+	JMenuItem fileNotepad = new JMenuItem ("Блокнот");
+	JMenuItem fileExit = new JMenuItem ("Вихід");
 	
-	JMenu menuDictionary =new JMenu("Dictionary");
-	JMenuItem dictionaryHumans = new JMenuItem("Humans");
-	JMenuItem dictionaryTime = new JMenuItem("Time");
-	JMenuItem dictionaryRegulations = new JMenuItem("Regulations");
-	JMenuItem dictionaryRegulationsTime = new JMenuItem("RegulationsTime");
+	JMenu menuDictionary =new JMenu("Довідники");
+	JMenuItem dictionaryHumans = new JMenuItem("Працівники");
+	JMenuItem dictionaryTime = new JMenuItem("Часові графіки");
+	JMenuItem dictionaryRegulations = new JMenuItem("Норми робочих днів");
+	JMenuItem dictionaryRegulationsTime = new JMenuItem("Норми робочого часу");
 	
-	JMenu menuWork = new JMenu("DataInput");
-	JMenuItem workTimesheet = new JMenuItem("TimeSheet");
-	JMenuItem workPlansheet = new JMenuItem("PlanSheet");
+	JMenu menuWork = new JMenu("Введення даних");
+	JMenuItem workTimesheet = new JMenuItem("Табель");
+	JMenuItem workPlansheet = new JMenuItem("Графік");
 	
-	JMenu menuOptions = new JMenu("Options");
-	JMenuItem optionsDBProperties = new JMenuItem("DBProperties");
+	JMenu menuOptions = new JMenu("Параметри");
+	JMenuItem optionsDBProperties = new JMenuItem("Налаштування БД");
 	
 	void setMenuFile() {
 		this.fileCalc.setIcon(new ImageIcon(getClass().getResource("/icons/ator.png")));
