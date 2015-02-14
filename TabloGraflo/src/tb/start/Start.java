@@ -43,6 +43,7 @@ public class Start extends JFrame {
 	}
 
 	/**
+	 * Конструктор Фрейму
 	 * @throws HeadlessException
 	 */
 	public Start() throws HeadlessException {

@@ -1,3 +1,4 @@
+//Клас для створення БД у разі її відсутності
 package tb.dbprovider;
 
 import java.sql.*;

@@ -27,7 +27,7 @@ import tb.properties.userProperties;
 public class FormProperties extends JDialog {
 
 	/**
-	 * 
+	 * Клас відповідає за діалог налаштування БД
 	 */
 	private static final long serialVersionUID = 1L;
 	JDialog jd = new JDialog();
@@ -44,6 +44,7 @@ public class FormProperties extends JDialog {
 	JFileChooser fileopen;
 	int ret;
 
+	//Конструктор діалогу
 	public FormProperties() throws HeadlessException {
 		super();
 		jd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

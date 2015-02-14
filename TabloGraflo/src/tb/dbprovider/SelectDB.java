@@ -1,3 +1,4 @@
+//Клас що відповідає за SELECT таблиць із БД
 package tb.dbprovider;
 
 import java.sql.Connection;
@@ -23,6 +24,7 @@ public class SelectDB {
 	public ArrayList<DbHumans> listDBH;
 	public ArrayList<DbTime> listDBT;
 	
+	//Метод вибірка даних із таблиці Humans повертає значення у вигляді ArrayList
 	public  void queryDbHumans() throws SQLException, ClassNotFoundException{
 		listDBH = new ArrayList<DbHumans>();
 		c = null;
@@ -81,6 +83,7 @@ public class SelectDB {
 		
 	}
 	
+	//Метод вибірка даних із таблиці Time повертає значення у вигляді ArrayList
 	public void queryDbTime() throws SQLException, ClassNotFoundException{
 		listDBT = new ArrayList<DbTime>();
 		c = null;

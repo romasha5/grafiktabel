@@ -33,7 +33,7 @@ import tb.start.Start;
 public class FormHumans extends JFrame {
 
 	/**
-	 * 
+	 * Клас відповідає за форму "Довідник працівників"
 	 * @author Roma
 	 */
 	private static final long serialVersionUID = 1L;
@@ -73,6 +73,7 @@ public class FormHumans extends JFrame {
 	private Object[][] rowdatas;	
 
 	/**
+	 * Конструктор форми "Довідник працівників"
 	 * @throws HeadlessException
 	 */
 	public FormHumans(Start str) throws HeadlessException {
@@ -85,7 +86,6 @@ public class FormHumans extends JFrame {
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
 		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -179,7 +179,8 @@ public class FormHumans extends JFrame {
 		setVisible(true);
 		
 	}
-	
+
+	//Метод розміщення елементів управління
 	public void setJTtextFields(Start str) {
 		this.jllastname = new JLabel(sdb.namefields[1]+":");
 		this.jllastname.setBounds(10, 415, 100, 20);
@@ -312,6 +313,7 @@ public class FormHumans extends JFrame {
 		});
 	}
 	
+	//Метод заповнює текстові та інші елементи значеннями
 	public void jtmode(){
 		int sr = jt.getSelectedRow();
 		jtlastname.setText(jt.getValueAt(sr, 1).toString());
@@ -331,6 +333,7 @@ public class FormHumans extends JFrame {
 		jtidname.setSelectedItem(jt.getValueAt(sr, 8).toString());
 	}
 	
+	//Метод закриває фрейм
 	public void closeApp(Start str){
 		dispose();
 		str.setVisible(true);
