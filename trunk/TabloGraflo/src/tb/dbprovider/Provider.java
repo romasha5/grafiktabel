@@ -1,3 +1,4 @@
+//Клас провайдер (для коннекту) з БД
 package tb.dbprovider;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,6 +18,8 @@ public class Provider {
 	
 	private static Connection c;
 	
+	 // Метод коннектиться до БД
+
 	public static void connectToDeBase(String cs)
 	  {
 	    c = null;
@@ -55,7 +58,7 @@ public class Provider {
 	    }
 	  }
 	
-	
+	//Метод закриває БД
 	public static void closeDeBase() throws SQLException, ClassNotFoundException
 	  {
 		  c.close();

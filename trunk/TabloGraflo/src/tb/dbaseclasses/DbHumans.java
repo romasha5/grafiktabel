@@ -1,3 +1,4 @@
+//Клас-обгортка для таблиці Humans
 package tb.dbaseclasses;
 
 public class DbHumans  {

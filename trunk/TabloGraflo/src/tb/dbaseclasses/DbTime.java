@@ -1,3 +1,4 @@
+//Клас-обгортка для таблиці Time
 package tb.dbaseclasses;
 
 public class DbTime {
