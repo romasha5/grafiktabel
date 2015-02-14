@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -26,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import sun.invoke.empty.Empty;
 import tb.dbaseclasses.DbHumans;
 import tb.dbprovider.SelectDB;
 import tb.start.Start;
@@ -79,7 +83,8 @@ public class FormHumans extends JFrame {
 	public FormHumans(Start str) throws HeadlessException {
 		super();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setPreferredSize(new Dimension(800,600));
+		setPreferredSize(new Dimension(805,550));
+		setTitle("Довідник працівників");
 		setResizable(false);
 		ImageIcon img =new ImageIcon(getClass().getResource("/icons/address-book.png"));
 		setIconImage(img.getImage());
@@ -192,6 +197,15 @@ public class FormHumans extends JFrame {
 		this.jtlastname.setBounds(125, 415, 150, 20);
 		this.jtlastname.setEditable(false);
 		this.contentPane.add(this.jtlastname);
+		this.jtlastname.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+		        	 jtname.setText("Введіть ім'я");
+		        	 jtname.requestFocus();
+		        	 jtname.selectAll();
+		         }
+		      }
+		});
 		
 		this.jlname = new JLabel(sdb.namefields[2]+":");
 		this.jlname.setBounds(10, 440, 100, 20);
@@ -278,6 +292,15 @@ public class FormHumans extends JFrame {
 		this.jbadd.setBounds(530, 415, 100, 20);
 		this.contentPane.add(jbadd);
 		
+		this.jbadd.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				prepereAdd();
+				jbadd.setText("Відміна");
+			}
+		});
+		
 		this.jbchange = new JButton("Змінити");
 		this.jbchange.setBounds(530, 440, 100, 20);
 		this.contentPane.add(jbchange);
@@ -332,6 +355,30 @@ public class FormHumans extends JFrame {
 		
 		jtidname.setSelectedItem(jt.getValueAt(sr, 8).toString());
 	}
+	
+	//Метод підготовка до введення нового запису
+	public void prepereAdd(){
+		jtlastname.setText("Введіть прізвище");
+		jtlastname.setEditable(true);
+		jtname.setText(null);
+		jtname.setEditable(true);
+		jtfathersname.setText(null);
+		jtfathersname.setEditable(true);
+		jtposition.setText(null);
+		jtposition.setEditable(true);
+		jttablenumber.setText(null);
+		jttablenumber.setEditable(true);
+		jtpercent.setText(null);
+		jtpercent.setEditable(true);
+		jtsex.setSelectedItem(null);
+		jtsex.setEnabled(true);
+		jtidname.setSelectedItem(null);
+		jtidname.setEnabled(true);
+		jtlastname.requestFocus();
+		jtlastname.selectAll();
+		
+	}
+
 	
 	//Метод закриває фрейм
 	public void closeApp(Start str){
