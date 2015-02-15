@@ -364,6 +364,7 @@ public class FormHumans extends JFrame {
 					prepereAdd();
 					jbadd.setText("Відміна");
 					jbadd.setForeground(Color.RED);
+					jbchange.setEnabled(false);
 					flag = true;
 				}
 				else {
@@ -371,6 +372,7 @@ public class FormHumans extends JFrame {
 					revers();
 					jbadd.setText("Додати");
 					jbadd.setForeground(Color.BLACK);
+					jbchange.setEnabled(true);
 					jbsave.setEnabled(false);
 					flag = false;
 				}
@@ -388,6 +390,7 @@ public class FormHumans extends JFrame {
 					gochange();
 					jbchange.setText("Відміна");
 					jbchange.setForeground(Color.RED);
+					jbadd.setEnabled(false);
 					jtlastname.requestFocus(true);
 					jtlastname.selectAll();
 					flag = true;
@@ -398,6 +401,7 @@ public class FormHumans extends JFrame {
 					revers();
 					jbchange.setText("Змінити");
 					jbchange.setForeground(Color.BLACK);
+					jbadd.setEnabled(true);
 					jbsave.setEnabled(false);
 					flag = false;
 				}
