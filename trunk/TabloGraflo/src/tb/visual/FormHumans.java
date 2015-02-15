@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -29,7 +28,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import sun.invoke.empty.Empty;
 import tb.dbaseclasses.DbHumans;
 import tb.dbprovider.SelectDB;
 import tb.start.Start;
@@ -196,13 +194,12 @@ public class FormHumans extends JFrame {
 		this.jtlastname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtlastname.setBounds(125, 415, 150, 20);
 		this.jtlastname.setEditable(false);
+		this.jtlastname.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jtlastname);
 		this.jtlastname.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
-		         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-		        	 jtname.setText("Введіть ім'я");
-		        	 jtname.requestFocus();
-		        	 jtname.selectAll();
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 tabevent(jtname);
 		         }
 		      }
 		});
@@ -216,7 +213,15 @@ public class FormHumans extends JFrame {
 		this.jtname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtname.setBounds(125, 440, 150, 20);
 		this.jtname.setEditable(false);
+		this.jtname.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jtname);
+		this.jtname.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 tabevent(jtfathersname);
+		         }
+		      }
+		});
 		
 		this.jlfathersname = new JLabel(sdb.namefields[3]+":");
 		this.jlfathersname.setBounds(10, 465, 150, 20);
@@ -227,7 +232,15 @@ public class FormHumans extends JFrame {
 		this.jtfathersname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtfathersname.setBounds(125, 465, 150, 20);
 		this.jtfathersname.setEditable(false);
+		this.jtfathersname.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jtfathersname);
+		this.jtfathersname.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 tabevent(jtposition);
+		         }
+		      }
+		});
 		
 		this.jlposition = new JLabel(sdb.namefields[4]+":");
 		this.jlposition.setBounds(10, 490, 150, 20);
@@ -238,7 +251,15 @@ public class FormHumans extends JFrame {
 		this.jtposition.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtposition.setBounds(125, 490, 150, 20);
 		this.jtposition.setEditable(false);
+		this.jtposition.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jtposition);
+		this.jtposition.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 tabevent(jttablenumber);
+		         }
+		      }
+		});
 		
 		this.jltablenumber = new JLabel(sdb.namefields[5]+":");
 		this.jltablenumber.setBounds(285, 415, 150, 20);
@@ -249,7 +270,15 @@ public class FormHumans extends JFrame {
 		this.jttablenumber.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jttablenumber.setBounds(360, 415, 150, 20);
 		this.jttablenumber.setEditable(false);
+		this.jttablenumber.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jttablenumber);
+		this.jttablenumber.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 tabevent(jtpercent);
+		         }
+		      }
+		});
 		
 		this.jlpercent = new JLabel(sdb.namefields[6]+":");
 		this.jlpercent.setBounds(285, 440, 150, 20);
@@ -260,7 +289,16 @@ public class FormHumans extends JFrame {
 		this.jtpercent.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtpercent.setBounds(360, 440, 150, 20);
 		this.jtpercent.setEditable(false);
+		this.jtpercent.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jtpercent);
+		this.jtpercent.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 jtsex.requestFocus();
+		        	 jtsex.setSelectedItem(null);		        	 
+		         }
+		      }
+		});
 		
 		this.jlsex = new JLabel(sdb.namefields[7]+":");
 		this.jlsex.setBounds(285, 465, 150, 20);
@@ -271,7 +309,16 @@ public class FormHumans extends JFrame {
 		this.jtsex.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtsex.setBounds(360, 465, 150, 20);
 		this.jtsex.setEnabled(false);
+		this.jtsex.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jtsex);
+		this.jtsex.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {		        	 
+		        	 jtidname.requestFocus();
+		        	 jtidname.setSelectedItem(null);
+		         }
+		      }
+		});
 		
 		this.jlidname = new JLabel(sdb.namefields[9]+":");
 		this.jlidname.setBounds(285, 490, 150, 20);
@@ -286,7 +333,16 @@ public class FormHumans extends JFrame {
 		this.jtidname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtidname.setBounds(360, 490, 150, 20);
 		this.jtidname.setEnabled(false);
+		this.jtidname.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jtidname);
+		this.jtidname.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 jbsave.setEnabled(true);
+		        	 jbsave.requestFocus();
+		         }
+		      }
+		});
 		
 		this.jbadd = new JButton("Додати");
 		this.jbadd.setBounds(530, 415, 100, 20);
@@ -358,7 +414,6 @@ public class FormHumans extends JFrame {
 	
 	//Метод підготовка до введення нового запису
 	public void prepereAdd(){
-		jtlastname.setText("Введіть прізвище");
 		jtlastname.setEditable(true);
 		jtname.setText(null);
 		jtname.setEditable(true);
@@ -373,10 +428,8 @@ public class FormHumans extends JFrame {
 		jtsex.setSelectedItem(null);
 		jtsex.setEnabled(true);
 		jtidname.setSelectedItem(null);
-		jtidname.setEnabled(true);
-		jtlastname.requestFocus();
-		jtlastname.selectAll();
-		
+		jtidname.setEnabled(true);	
+		tabevent(jtlastname);
 	}
 
 	
@@ -384,5 +437,11 @@ public class FormHumans extends JFrame {
 	public void closeApp(Start str){
 		dispose();
 		str.setVisible(true);
+	}
+	
+	public void tabevent(JTextField tf){
+   	 tf.setText("Введіть дані");
+   	 tf.requestFocus();
+   	 tf.selectAll();
 	}
 }
