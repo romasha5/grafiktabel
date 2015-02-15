@@ -1,5 +1,6 @@
 package tb.visual;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
@@ -71,6 +72,8 @@ public class FormHumans extends JFrame {
 	JButton jbsave;
 	JButton jbexit;
 
+	Boolean flag = false;
+	Boolean flagaddchange=false;
 	SelectDB sdb;
 	private Object[][] rowdatas;	
 
@@ -295,7 +298,9 @@ public class FormHumans extends JFrame {
 		     public void keyPressed(KeyEvent e) {       
 		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
 		        	 jtsex.requestFocus();
-		        	 jtsex.setSelectedItem(null);		        	 
+		        	 if(!flagaddchange){
+		        		 jtsex.setSelectedItem(null);
+		        		 }	        	 
 		         }
 		      }
 		});
@@ -315,7 +320,9 @@ public class FormHumans extends JFrame {
 		     public void keyPressed(KeyEvent e) {       
 		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {		        	 
 		        	 jtidname.requestFocus();
-		        	 jtidname.setSelectedItem(null);
+		        	 if(!flagaddchange){
+		        		 jtidname.setSelectedItem(null);
+		        		 }
 		         }
 		      }
 		});
@@ -352,14 +359,51 @@ public class FormHumans extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				prepereAdd();
-				jbadd.setText("Відміна");
+				if(!flag){
+					gochange();
+					prepereAdd();
+					jbadd.setText("Відміна");
+					jbadd.setForeground(Color.RED);
+					flag = true;
+				}
+				else {
+					jtmode();
+					revers();
+					jbadd.setText("Додати");
+					jbadd.setForeground(Color.BLACK);
+					jbsave.setEnabled(false);
+					flag = false;
+				}
 			}
 		});
 		
 		this.jbchange = new JButton("Змінити");
 		this.jbchange.setBounds(530, 440, 100, 20);
 		this.contentPane.add(jbchange);
+		this.jbchange.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(!flag){
+					gochange();
+					jbchange.setText("Відміна");
+					jbchange.setForeground(Color.RED);
+					jtlastname.requestFocus(true);
+					jtlastname.selectAll();
+					flag = true;
+					flagaddchange = true;
+				}
+				else {
+					jtmode();
+					revers();
+					jbchange.setText("Змінити");
+					jbchange.setForeground(Color.BLACK);
+					jbsave.setEnabled(false);
+					flag = false;
+				}
+				
+			}
+		});
 		
 		this.jbdelete = new JButton("Видалити");
 		this.jbdelete.setBounds(530, 465, 100, 20);
@@ -414,24 +458,37 @@ public class FormHumans extends JFrame {
 	
 	//Метод підготовка до введення нового запису
 	public void prepereAdd(){
-		jtlastname.setEditable(true);
 		jtname.setText(null);
-		jtname.setEditable(true);
 		jtfathersname.setText(null);
-		jtfathersname.setEditable(true);
 		jtposition.setText(null);
-		jtposition.setEditable(true);
 		jttablenumber.setText(null);
-		jttablenumber.setEditable(true);
 		jtpercent.setText(null);
-		jtpercent.setEditable(true);
 		jtsex.setSelectedItem(null);
-		jtsex.setEnabled(true);
 		jtidname.setSelectedItem(null);
-		jtidname.setEnabled(true);	
 		tabevent(jtlastname);
 	}
-
+	public void gochange(){
+		jtlastname.setEditable(true);
+		jtname.setEditable(true);
+		jtfathersname.setEditable(true);
+		jtposition.setEditable(true);
+		jttablenumber.setEditable(true);
+		jtpercent.setEditable(true);
+		jtsex.setEnabled(true);
+		jtidname.setEnabled(true);	
+	}
+	
+	//Відміна введення чи зміни
+	public void revers(){
+		jtlastname.setEditable(false);
+		jtname.setEditable(false);
+		jtfathersname.setEditable(false);
+		jtposition.setEditable(false);
+		jttablenumber.setEditable(false);
+		jtpercent.setEditable(false);
+		jtsex.setEnabled(false);
+		jtidname.setEnabled(false);	
+	}
 	
 	//Метод закриває фрейм
 	public void closeApp(Start str){
@@ -440,8 +497,15 @@ public class FormHumans extends JFrame {
 	}
 	
 	public void tabevent(JTextField tf){
-   	 tf.setText("Введіть дані");
-   	 tf.requestFocus();
-   	 tf.selectAll();
+		if(!flagaddchange){
+			tf.setText("Введіть дані");
+   	 		tf.requestFocus();
+   	 		tf.selectAll();
+		}
+		else {
+  	 		tf.requestFocus();
+   	 		tf.selectAll();
+		}
 	}
+	
 }
