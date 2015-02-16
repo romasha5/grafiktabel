@@ -31,7 +31,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import tb.dbaseclasses.DbHumans;
-import tb.dbprovider.SelectDB;
+import tb.dbprovider.QueryHumansTable;
 import tb.start.Start;
 
 public class FormHumans extends JFrame {
@@ -75,7 +75,8 @@ public class FormHumans extends JFrame {
 
 	Boolean flag = false;
 	Boolean flagaddchange=false;
-	SelectDB sdb;
+	Boolean flagdelete = false;
+	QueryHumansTable sdb;
 	private Object[][] rowdatas;	
 	DefaultTableModel model;
 
@@ -126,8 +127,7 @@ public class FormHumans extends JFrame {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				jtmode();
-				
+				if(!flagdelete){jtmode();}				
 			}
 		});
 		
@@ -381,16 +381,33 @@ public class FormHumans extends JFrame {
 				int dr=JOptionPane.showConfirmDialog(null,"Запис буде вилучено. Продовжити?",
 								"Попередження",JOptionPane.YES_NO_OPTION);
 				if(dr == JOptionPane.YES_OPTION){
-					String sel = jt.getValueAt(jt.getSelectedRow(), 0).toString(); 					
-					SelectDB.queryDelete("HUMANS",sel);
-					SelectDB.commit();
+					try{
+					flagdelete=!flagdelete;
+					String sel = jt.getValueAt(jt.getSelectedRow(), 0).toString();
+					QueryHumansTable.queryDelete("HUMANS", sel);
 					getDani();
-					getDaniTime();
-					setTablemodel();
-					jt.revalidate();
-				}
-				
-			}
+					jt.setModel(model);
+					jt.removeColumn(jt.getColumnModel().getColumn(8));
+					jt.getTableHeader().setReorderingAllowed(false);
+					
+				    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+				    jt.setRowSorter(sorter);
+					jt.getColumnModel().getColumn(0).setPreferredWidth(20);
+					jt.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+					jt.setRowSelectionInterval(0, 0);
+					}
+					catch(IndexOutOfBoundsException ex){
+
+						}
+					}
+					jt.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+						
+						@Override
+						public void valueChanged(ListSelectionEvent e) {
+							if(!flagdelete){jtmode();}				
+						}
+					});
+				}						
 		});
 		
 		this.jbsave = new JButton("Зберегти");
@@ -498,7 +515,7 @@ public class FormHumans extends JFrame {
 	//Отримання даних в TableModel із таблиці працівники
 	void getDani(){
 
-		sdb = new SelectDB();
+		sdb = new QueryHumansTable();
 		
 		try {
 			sdb.queryDbHumans();
@@ -531,6 +548,8 @@ public class FormHumans extends JFrame {
 				rowdatas[i][9]=listDBH.get(i).getTimeName();
 			model.addRow(rowdatas[i]);
 		}
+		
+		
 	}
 	
 	//Отримання даних з таблиці часові графіки

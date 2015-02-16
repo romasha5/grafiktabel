@@ -15,7 +15,7 @@ import tb.dbaseclasses.DbHumans;
 import tb.dbaseclasses.DbTime;
 import tb.properties.userProperties;
 
-public class SelectDB {
+public class QueryHumansTable {
 	
 	private static Connection c;
 	private static Statement stmt;
@@ -121,13 +121,18 @@ public class SelectDB {
 		  public static void queryDelete(String table,String id )
 		  {	    
 		    userProperties up = new userProperties();
+			c = null;
+		    stmt = null;
 		    try {
 		      Class.forName("org.sqlite.JDBC");
 		      c = DriverManager.getConnection(up.getConStr());
 		      c.setAutoCommit(false);
 		      stmt = c.createStatement();
 		      String sql = "DELETE from "+table+" where ID="+id+";";
-		      stmt.executeUpdate(sql);	      
+		      stmt.executeUpdate(sql);	
+		      c.commit();
+			  stmt.close();
+			  c.close();		      
 		    } catch ( Exception e ) {
 		      JOptionPane.showMessageDialog(null,e.getClass().getName() + ": " + e.getMessage() );	      
 		    }
