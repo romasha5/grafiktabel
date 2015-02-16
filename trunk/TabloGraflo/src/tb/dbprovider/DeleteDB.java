@@ -9,7 +9,7 @@ import tb.properties.userProperties;
 public class DeleteDB {
     static Connection c = null;	
     static Statement stmt = null;
-	  public static void main(String table,String id )
+	  public static void queryDelete(String table,String id )
 	  {	    
 	    userProperties up = new userProperties();
 	    try {
