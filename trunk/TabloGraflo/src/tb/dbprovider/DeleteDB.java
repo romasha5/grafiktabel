@@ -17,8 +17,8 @@ public class DeleteDB {
 	      c = DriverManager.getConnection(up.getConStr());
 	      c.setAutoCommit(false);
 	      stmt = c.createStatement();
-	      String sql = "DELETE from "+table+" where " +id+";";
-	      stmt.executeUpdate(sql);
+	      String sql = "DELETE from "+table+" where ID="+id+";";
+	      stmt.executeUpdate(sql);	      
 	    } catch ( Exception e ) {
 	      JOptionPane.showMessageDialog(null,e.getClass().getName() + ": " + e.getMessage() );	      
 	    }
