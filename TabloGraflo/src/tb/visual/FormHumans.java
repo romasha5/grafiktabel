@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,7 +29,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
 import tb.dbaseclasses.DbHumans;
 import tb.dbprovider.SelectDB;
 import tb.start.Start;
@@ -76,6 +76,7 @@ public class FormHumans extends JFrame {
 	Boolean flagaddchange=false;
 	SelectDB sdb;
 	private Object[][] rowdatas;	
+	DefaultTableModel model;
 
 	/**
 	 * Конструктор форми "Довідник працівників"
@@ -110,7 +111,7 @@ public class FormHumans extends JFrame {
 		}
 		ArrayList<DbHumans> listDBH = sdb.listDBH;
 		rowdatas = new Object[listDBH.size()][sdb.namefields.length];
-		DefaultTableModel model = new DefaultTableModel();
+		model = new DefaultTableModel();
 		
 		
 
@@ -345,8 +346,14 @@ public class FormHumans extends JFrame {
 		this.jtidname.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
 		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 jbsave.setEnabled(true);
-		        	 jbsave.requestFocus();
+		        	 if(!flagaddchange){
+		        		 jbsave.setEnabled(true);
+		        		 jbsave.setForeground(Color.GREEN);
+		        		 jbsave.requestFocus();
+		        	 }
+		        	 else {
+		        		 jbsave.requestFocus();
+					}
 		         }
 		      }
 		});
@@ -395,12 +402,15 @@ public class FormHumans extends JFrame {
 					jtlastname.selectAll();
 					flag = true;
 					flagaddchange = true;
+					jbsave.setEnabled(true);
+					jbsave.setForeground(Color.GREEN);
 				}
 				else {
 					jtmode();
 					revers();
 					jbchange.setText("Змінити");
 					jbchange.setForeground(Color.BLACK);
+					flagaddchange = false;
 					jbadd.setEnabled(true);
 					jbsave.setEnabled(false);
 					flag = false;
@@ -412,6 +422,19 @@ public class FormHumans extends JFrame {
 		this.jbdelete = new JButton("Видалити");
 		this.jbdelete.setBounds(530, 465, 100, 20);
 		this.contentPane.add(jbdelete);
+		this.jbdelete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int dr=JOptionPane.showConfirmDialog(null,"Запис буде вилучено. Продовжити?",
+								"Попередження",JOptionPane.YES_NO_OPTION);
+				if(dr == JOptionPane.YES_OPTION){
+					int sel = jt.getSelectedRow();
+					
+				}
+				
+			}
+		});
 		
 		this.jbsave = new JButton("Зберегти");
 		this.jbsave.setBounds(530, 490, 100, 20);
