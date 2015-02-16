@@ -29,7 +29,9 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
 import tb.dbaseclasses.DbHumans;
+import tb.dbprovider.DeleteDB;
 import tb.dbprovider.SelectDB;
 import tb.start.Start;
 
@@ -429,7 +431,8 @@ public class FormHumans extends JFrame {
 				int dr=JOptionPane.showConfirmDialog(null,"Запис буде вилучено. Продовжити?",
 								"Попередження",JOptionPane.YES_NO_OPTION);
 				if(dr == JOptionPane.YES_OPTION){
-					int sel = jt.getSelectedRow();
+					String sel = jt.getValueAt(jt.getSelectedRow(), 0).toString(); 					
+					DeleteDB.queryDelete("HUMANS",sel);
 					
 				}
 				
@@ -534,5 +537,7 @@ public class FormHumans extends JFrame {
    	 		tf.selectAll();
 		}
 	}
+	
+	
 	
 }
