@@ -31,7 +31,6 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import tb.dbaseclasses.DbHumans;
-import tb.dbprovider.DeleteDB;
 import tb.dbprovider.SelectDB;
 import tb.start.Start;
 
@@ -383,8 +382,8 @@ public class FormHumans extends JFrame {
 								"Попередження",JOptionPane.YES_NO_OPTION);
 				if(dr == JOptionPane.YES_OPTION){
 					String sel = jt.getValueAt(jt.getSelectedRow(), 0).toString(); 					
-					DeleteDB.queryDelete("HUMANS",sel);
-					DeleteDB.commit();
+					SelectDB.queryDelete("HUMANS",sel);
+					SelectDB.commit();
 					getDani();
 					getDaniTime();
 					setTablemodel();
