@@ -101,40 +101,8 @@ public class FormHumans extends JFrame {
 					closeApp(str);
 				}
 		});
-
-		sdb = new SelectDB();
 		
-		try {
-			sdb.queryDbHumans();
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		ArrayList<DbHumans> listDBH = sdb.listDBH;
-		rowdatas = new Object[listDBH.size()][sdb.namefields.length];
-		model = new DefaultTableModel();
-		
-		
-
-		for (int i = 0; i < sdb.namefields.length; i++) {
-			model.addColumn(sdb.namefields[i]);			
-		}
-	
-		
-		for(int i = 0; i < listDBH.size(); i++){
-				rowdatas[i][0]=listDBH.get(i).getId();
-				rowdatas[i][1]=listDBH.get(i).getLastname();
-				rowdatas[i][2]=listDBH.get(i).getName();
-				rowdatas[i][3]=listDBH.get(i).getFathersname();
-				rowdatas[i][4]=listDBH.get(i).getPosition();
-				rowdatas[i][5]=listDBH.get(i).getTablenumber();
-				rowdatas[i][6]=listDBH.get(i).getPercent();
-				rowdatas[i][7]=listDBH.get(i).getSex();
-				rowdatas[i][8]=listDBH.get(i).getTimeId();
-				rowdatas[i][9]=listDBH.get(i).getTimeName();
-			model.addRow(rowdatas[i]);
-		}
+		getDani();
 
 		jsp = new JScrollPane(jt);
 		jsp.setBounds(10, 10, 780, 400);
@@ -142,21 +110,13 @@ public class FormHumans extends JFrame {
 		jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		contentPane.add(jsp);
 		
-		jt = new JTable(model){
-            /**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
-            public boolean isCellEditable(int arg0, int arg1) {
-                return false;
-            }
-        };;
+		setTablemodel();
+        
 		jsp.setViewportView(jt);
 		
 		jt.removeColumn(jt.getColumnModel().getColumn(8));
 		jt.getTableHeader().setReorderingAllowed(false);
+		
 	    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
 	    jt.setRowSorter(sorter);
 		jt.getColumnModel().getColumn(0).setPreferredWidth(20);
@@ -172,25 +132,16 @@ public class FormHumans extends JFrame {
 			}
 		});
 		
-		try {
-			sdb.queryDbTime();
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		
+		getDaniTime();		
 		setJTtextFields(str);
 		jtmode();
 		pack();
 		setLocationRelativeTo(null);
-
-		setVisible(true);
-		
+		setVisible(true);		
 	}
 
 	//Метод розміщення елементів управління
-	public void setJTtextFields(Start str) {
+	void setJTtextFields(Start str) {
 		this.jllastname = new JLabel(sdb.namefields[1]+":");
 		this.jllastname.setBounds(10, 415, 100, 20);
 		this.jllastname.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -433,7 +384,11 @@ public class FormHumans extends JFrame {
 				if(dr == JOptionPane.YES_OPTION){
 					String sel = jt.getValueAt(jt.getSelectedRow(), 0).toString(); 					
 					DeleteDB.queryDelete("HUMANS",sel);
-					
+					DeleteDB.commit();
+					getDani();
+					getDaniTime();
+					setTablemodel();
+					jt.revalidate();
 				}
 				
 			}
@@ -467,7 +422,7 @@ public class FormHumans extends JFrame {
 	}
 	
 	//Метод заповнює текстові та інші елементи значеннями
-	public void jtmode(){
+	void jtmode(){
 		int sr = jt.getSelectedRow();
 		jtlastname.setText(jt.getValueAt(sr, 1).toString());
 		jtname.setText(jt.getValueAt(sr, 2).toString());
@@ -487,7 +442,7 @@ public class FormHumans extends JFrame {
 	}
 	
 	//Метод підготовка до введення нового запису
-	public void prepereAdd(){
+	void prepereAdd(){
 		jtname.setText(null);
 		jtfathersname.setText(null);
 		jtposition.setText(null);
@@ -497,7 +452,9 @@ public class FormHumans extends JFrame {
 		jtidname.setSelectedItem(null);
 		tabevent(jtlastname);
 	}
-	public void gochange(){
+	
+	//Метод підготовка до змін
+	void gochange(){
 		jtlastname.setEditable(true);
 		jtname.setEditable(true);
 		jtfathersname.setEditable(true);
@@ -509,7 +466,7 @@ public class FormHumans extends JFrame {
 	}
 	
 	//Відміна введення чи зміни
-	public void revers(){
+	void revers(){
 		jtlastname.setEditable(false);
 		jtname.setEditable(false);
 		jtfathersname.setEditable(false);
@@ -521,12 +478,13 @@ public class FormHumans extends JFrame {
 	}
 	
 	//Метод закриває фрейм
-	public void closeApp(Start str){
+	void closeApp(Start str){
 		dispose();
 		str.setVisible(true);
 	}
 	
-	public void tabevent(JTextField tf){
+	//Заповнює поля текстом "Введіть дані" і передає фокус на наступне
+	void tabevent(JTextField tf){
 		if(!flagaddchange){
 			tf.setText("Введіть дані");
    	 		tf.requestFocus();
@@ -538,6 +496,67 @@ public class FormHumans extends JFrame {
 		}
 	}
 	
+	//Отримання даних в TableModel із таблиці працівники
+	void getDani(){
+
+		sdb = new SelectDB();
+		
+		try {
+			sdb.queryDbHumans();
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		ArrayList<DbHumans> listDBH = sdb.listDBH;
+		rowdatas = new Object[listDBH.size()][sdb.namefields.length];
+		model = new DefaultTableModel();
+		
+		
+
+		for (int i = 0; i < sdb.namefields.length; i++) {
+			model.addColumn(sdb.namefields[i]);			
+		}
 	
+		
+		for(int i = 0; i < listDBH.size(); i++){
+				rowdatas[i][0]=listDBH.get(i).getId();
+				rowdatas[i][1]=listDBH.get(i).getLastname();
+				rowdatas[i][2]=listDBH.get(i).getName();
+				rowdatas[i][3]=listDBH.get(i).getFathersname();
+				rowdatas[i][4]=listDBH.get(i).getPosition();
+				rowdatas[i][5]=listDBH.get(i).getTablenumber();
+				rowdatas[i][6]=listDBH.get(i).getPercent();
+				rowdatas[i][7]=listDBH.get(i).getSex();
+				rowdatas[i][8]=listDBH.get(i).getTimeId();
+				rowdatas[i][9]=listDBH.get(i).getTimeName();
+			model.addRow(rowdatas[i]);
+		}
+	}
 	
+	//Отримання даних з таблиці часові графіки
+	void getDaniTime(){
+		try {
+			sdb.queryDbTime();
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	//model чіпляю до таблиці
+	void setTablemodel(){
+		jt = new JTable(model){
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+            public boolean isCellEditable(int arg0, int arg1) {
+                return false;
+            }
+        };
+	}
 }
