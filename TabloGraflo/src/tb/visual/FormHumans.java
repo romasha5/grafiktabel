@@ -102,26 +102,7 @@ public class FormHumans extends JFrame {
 				}
 		});
 		
-		getDani();
-
-		jsp = new JScrollPane(jt);
-		jsp.setBounds(10, 10, 780, 400);
-		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		contentPane.add(jsp);
-		
-		setTablemodel();
-        
-		jsp.setViewportView(jt);
-		
-		jt.removeColumn(jt.getColumnModel().getColumn(8));
-		jt.getTableHeader().setReorderingAllowed(false);
-		
-	    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-	    jt.setRowSorter(sorter);
-		jt.getColumnModel().getColumn(0).setPreferredWidth(20);
-		jt.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jt.setRowSelectionInterval(0, 0);
+		getDani();		    						
 		
 		jt.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
@@ -439,6 +420,8 @@ public class FormHumans extends JFrame {
 	
 	//Метод заповнює текстові та інші елементи значеннями
 	void jtmode(){
+		
+		
 		int sr = jt.getSelectedRow();
 		jtlastname.setText(jt.getValueAt(sr, 1).toString());
 		jtname.setText(jt.getValueAt(sr, 2).toString());
@@ -514,7 +497,7 @@ public class FormHumans extends JFrame {
 	
 	//Отримання даних в TableModel із таблиці працівники
 	void getDani(){
-
+		
 		sdb = new QueryHumansTable();
 		
 		try {
@@ -526,9 +509,10 @@ public class FormHumans extends JFrame {
 		}
 		ArrayList<DbHumans> listDBH = sdb.listDBH;
 		rowdatas = new Object[listDBH.size()][sdb.namefields.length];
-		model = new DefaultTableModel();
 		
+		model = new DefaultTableModel();		
 		
+		if(listDBH.size()!=0){
 
 		for (int i = 0; i < sdb.namefields.length; i++) {
 			model.addColumn(sdb.namefields[i]);			
@@ -548,8 +532,9 @@ public class FormHumans extends JFrame {
 				rowdatas[i][9]=listDBH.get(i).getTimeName();
 			model.addRow(rowdatas[i]);
 		}
-		
-		
+		setTablemodel();    	
+		setvisualTable();
+		}
 	}
 	
 	//Отримання даних з таблиці часові графіки
@@ -576,5 +561,23 @@ public class FormHumans extends JFrame {
                 return false;
             }
         };
+	}
+	
+	void setvisualTable(){
+		jsp = new JScrollPane(jt);
+		jsp.setBounds(10, 10, 780, 400);
+		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		contentPane.add(jsp);
+		
+		jsp.setViewportView(jt);
+		jt.removeColumn(jt.getColumnModel().getColumn(8));
+		jt.getTableHeader().setReorderingAllowed(false);
+		
+	    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+	    jt.setRowSorter(sorter);
+		jt.getColumnModel().getColumn(0).setPreferredWidth(20);
+		jt.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jt.setRowSelectionInterval(0, 0);
 	}
 }
