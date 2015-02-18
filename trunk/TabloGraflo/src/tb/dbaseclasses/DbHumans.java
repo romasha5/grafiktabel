@@ -58,7 +58,6 @@ public class DbHumans  {
 		this.sex = sex;
 	}
 	
-
 	public Integer getTimeId() {
 		return timeId;
 	}

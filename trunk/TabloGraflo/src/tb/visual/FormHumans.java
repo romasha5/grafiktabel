@@ -73,6 +73,7 @@ public class FormHumans extends JFrame {
 	JButton jbsave;
 	JButton jbexit;
 
+	Integer ld;
 	Boolean flag = false;
 	Boolean flagaddchange=false;
 	Boolean flagdelete = false;
@@ -104,13 +105,6 @@ public class FormHumans extends JFrame {
 		
 		getDani();		    						
 		
-		jt.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if(!flagdelete){jtmode();}				
-			}
-		});
 		
 		getDaniTime();		
 		setJTtextFields(str);
@@ -421,7 +415,7 @@ public class FormHumans extends JFrame {
 	//Метод заповнює текстові та інші елементи значеннями
 	void jtmode(){
 		
-		
+		if(this.ld>0){
 		int sr = jt.getSelectedRow();
 		jtlastname.setText(jt.getValueAt(sr, 1).toString());
 		jtname.setText(jt.getValueAt(sr, 2).toString());
@@ -438,6 +432,7 @@ public class FormHumans extends JFrame {
 		}
 		
 		jtidname.setSelectedItem(jt.getValueAt(sr, 8).toString());
+		}
 	}
 	
 	//Метод підготовка до введення нового запису
@@ -509,7 +504,7 @@ public class FormHumans extends JFrame {
 		}
 		ArrayList<DbHumans> listDBH = sdb.listDBH;
 		rowdatas = new Object[listDBH.size()][sdb.namefields.length];
-		
+		this.ld = listDBH.size();
 		model = new DefaultTableModel();		
 		
 		if(listDBH.size()!=0){
@@ -531,9 +526,9 @@ public class FormHumans extends JFrame {
 				rowdatas[i][9]=listDBH.get(i).getTimeName();
 			model.addRow(rowdatas[i]);
 		}
-		setTablemodel();    	
-		setvisualTable();
+		setTablemodel();    			
 		}
+		setvisualTable();
 	}
 	
 	//Отримання даних з таблиці часові графіки
@@ -570,13 +565,30 @@ public class FormHumans extends JFrame {
 		contentPane.add(jsp);
 		
 		jsp.setViewportView(jt);
+		
+		if(ld>0){
+			
+			
+			jt.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					if(!flagdelete){
+						jtmode();
+						}				
+				}
+			});
+
+			
 		jt.removeColumn(jt.getColumnModel().getColumn(8));
 		jt.getTableHeader().setReorderingAllowed(false);
+		
 		
 	    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
 	    jt.setRowSorter(sorter);
 		jt.getColumnModel().getColumn(0).setPreferredWidth(20);
 		jt.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jt.setRowSelectionInterval(0, 0);
+		}
 	}
 }
