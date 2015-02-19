@@ -67,9 +67,8 @@ public class QueryHumansTable {
 			}	
 	        
 	        listDBH = new Object[rsSize][namefields.length];
-	        
+	        int i=0;
 	        while(rs.next()){
-	        	for (int i = 0; i < rsSize;i++){
 	        		for (int j = 0; j < namefields.length; j++) {
 	        			switch (rsmd.getColumnType(j+1)) {
 						case Types.INTEGER:
@@ -87,8 +86,8 @@ public class QueryHumansTable {
 						default:
 							break;
 						}
-	        		}	        	
-	        	}	        	
+	        		}
+	        		i++;
 	        }	        	        
 	        techrs.close();
 	        rs.close();

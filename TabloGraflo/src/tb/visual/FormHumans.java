@@ -550,7 +550,7 @@ public class FormHumans extends JFrame {
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 					if(!flagdelete){
-						//jtmode();
+						jtmode();
 						}				
 				}
 			});
