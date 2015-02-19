@@ -7,11 +7,11 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import tb.dbaseclasses.DbHumans;
 import tb.dbaseclasses.DbTime;
 import tb.properties.userProperties;
 
@@ -25,7 +25,7 @@ public class QueryHumansTable {
 	public ArrayList<DbTime> listDBT;
 	
 	//Метод вибірка даних із таблиці Humans повертає значення у вигляді ArrayList
-	public  void queryDbHumans() throws SQLException, ClassNotFoundException{		
+	public  Object[][] queryDbHumans() throws SQLException, ClassNotFoundException{		
 		c = null;
 	    stmt = null;
 	    int rsSize=0;
@@ -35,7 +35,7 @@ public class QueryHumansTable {
 	        c = DriverManager.getConnection(up.getConStr());
 	        c.setAutoCommit(false);
 	        
-	        stmt = c.createStatement();
+	        stmt = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
 	        
 	        ResultSet rs = stmt.executeQuery("SELECT HUMANS.[id] AS \"#\","
 	        		+ "HUMANS.[lastname] AS \"ПРІЗВИЩЕ\","
@@ -50,6 +50,7 @@ public class QueryHumansTable {
 	        		+ "FROM HUMANS LEFT JOIN TIME "
 	        		+ "ON HUMANS.IDTIME=TIME.ID ORDER BY HUMANS.[id]");
 	        
+	        
 	        ResultSetMetaData rsmd = rs.getMetaData();
 	        
 	        namefields = new String[rsmd.getColumnCount()];
@@ -60,7 +61,7 @@ public class QueryHumansTable {
 	        if (rs != null) {
 	            rs.last();
 	            rsSize = rs.getRow();
-	            rs.beforeFirst();	            
+	            rs.beforeFirst();
 	        }
 	        
 	        listDBH = new Object[rsSize][namefields.length];
@@ -68,31 +69,34 @@ public class QueryHumansTable {
 	        while(rs.next()){
 	        	for (int i = 0; i < rsSize; i++){
 	        		for (int j = 0; j < namefields.length; j++) {
-	        			
+	        			switch (rsmd.getColumnType(j+1)) {
+						case Types.INTEGER:
+							listDBH[i][j]=rs.getInt(j+1);
+							break;
+						case Types.VARCHAR:
+							listDBH[i][j]=rs.getString(j+1);
+							break;
+						case Types.REAL:
+							listDBH[i][j]=rs.getFloat(j+1);
+							break;
+						case Types.NUMERIC:
+							listDBH[i][j]=rs.getFloat(j+1);
+							break;													
+						default:
+							break;
+						}
 	        		}
-	        	}
-	        	
-	        	DbHumans dbh = new DbHumans();
-	        	dbh.setId(rs.getInt(rsmd.getColumnName(1)));
-	        	dbh.setLastname(rs.getString(rsmd.getColumnName(2)));
-	        	dbh.setName(rs.getString(rsmd.getColumnName(3)));
-	        	dbh.setFathersname(rs.getString(rsmd.getColumnName(4)));
-	        	dbh.setPosition(rs.getString(rsmd.getColumnName(5)));
-	        	dbh.setTablenumber(rs.getInt(rsmd.getColumnName(6)));
-	        	dbh.setPercent(rs.getFloat(rsmd.getColumnName(7)));
-	        	dbh.setSex(rs.getString(rsmd.getColumnName(8)));	        	
-	        	dbh.setTimeId(rs.getInt(rsmd.getColumnName(9)));
-	        	dbh.setTimeName(rs.getString(rsmd.getColumnName(10)));
-
-	        	//listDBH.add(dbh);
-	        }
+	        	}	        	
+	        }	        	        
 	        
 	        rs.close();
 	        stmt.close();
 	        c.close();
+	        
 	      } catch ( Exception e ) {
 	        JOptionPane.showMessageDialog(null,e.getClass().getName() + ": " + e.getMessage() );
 	      }
+		return listDBH;
 		
 	}
 	
