@@ -24,18 +24,23 @@ public class QueryHumansTable {
 	public Object[][] listDBH;
 	public ArrayList<DbTime> listDBT;
 	
-	//Метод вибірка даних із таблиці Humans повертає значення у вигляді ArrayList
+	//Метод вибірка даних із таблиці Humans повертає значення 
 	public  Object[][] queryDbHumans() throws SQLException, ClassNotFoundException{		
 		c = null;
 	    stmt = null;
 	    int rsSize=0;
+	    
 	    userProperties up = new userProperties();
 	    try {
 	        Class.forName("org.sqlite.JDBC");
 	        c = DriverManager.getConnection(up.getConStr());
 	        c.setAutoCommit(false);
 	        
-	        stmt = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+	        stmt = c.createStatement();
+	        
+	        ResultSet techrs =stmt.executeQuery("SELECT COUNT() FROM HUMANS");
+	        rsSize = techrs.getInt(1);
+	        
 	        
 	        ResultSet rs = stmt.executeQuery("SELECT HUMANS.[id] AS \"#\","
 	        		+ "HUMANS.[lastname] AS \"ПРІЗВИЩЕ\","
@@ -50,24 +55,21 @@ public class QueryHumansTable {
 	        		+ "FROM HUMANS LEFT JOIN TIME "
 	        		+ "ON HUMANS.IDTIME=TIME.ID ORDER BY HUMANS.[id]");
 	        
+	       
+
 	        
 	        ResultSetMetaData rsmd = rs.getMetaData();
+	        
 	        
 	        namefields = new String[rsmd.getColumnCount()];
 	        for (int i = 0; i < namefields.length; i++) {
 				namefields[i]=rsmd.getColumnName(i+1);
 			}	
 	        
-	        if (rs != null) {
-	            rs.last();
-	            rsSize = rs.getRow();
-	            rs.beforeFirst();
-	        }
-	        
 	        listDBH = new Object[rsSize][namefields.length];
 	        
 	        while(rs.next()){
-	        	for (int i = 0; i < rsSize; i++){
+	        	for (int i = 0; i < rsSize;i++){
 	        		for (int j = 0; j < namefields.length; j++) {
 	        			switch (rsmd.getColumnType(j+1)) {
 						case Types.INTEGER:
@@ -85,10 +87,10 @@ public class QueryHumansTable {
 						default:
 							break;
 						}
-	        		}
+	        		}	        	
 	        	}	        	
 	        }	        	        
-	        
+	        techrs.close();
 	        rs.close();
 	        stmt.close();
 	        c.close();

@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -76,6 +77,8 @@ public class FormHumans extends JFrame {
 	Boolean flagdelete = false;
 	QueryHumansTable sdb;
 	DefaultTableModel model;
+
+	private Object[][] listDBH;
 
 	/**
 	 * Конструктор форми "Довідник працівників"
@@ -411,32 +414,32 @@ public class FormHumans extends JFrame {
 	void jtmode(){
 		
 		if(this.ld>0){
-		int sr = jt.getSelectedRow();
-		jtlastname.setText(jt.getValueAt(sr, 1).toString());
-		jtname.setText(jt.getValueAt(sr, 2).toString());
-		jtfathersname.setText(jt.getValueAt(sr, 3).toString());
-		jtposition.setText(jt.getValueAt(sr, 4).toString());
-		jttablenumber.setText(jt.getValueAt(sr, 5).toString());
-		jtpercent.setText(jt.getValueAt(sr, 6).toString());
+		int sr = jt.getSelectedRow();		
+		this.jtlastname.setText(jt.getValueAt(sr, 1).toString());
+		this.jtname.setText(jt.getValueAt(sr, 2).toString());
+		this.jtfathersname.setText(jt.getValueAt(sr, 3).toString());
+		this.jtposition.setText(jt.getValueAt(sr, 4).toString());
+		this.jttablenumber.setText(jt.getValueAt(sr, 5).toString());
+		this.jtpercent.setText(jt.getValueAt(sr, 6).toString());		
 		
 		if (jt.getValueAt(sr, 7).toString().length()==7) {
-			jtsex.setSelectedItem(Sex.Чоловік);
+			this.jtsex.setSelectedItem(Sex.Чоловік);
 		}
 		else {
-			jtsex.setSelectedItem(Sex.Жінка);
+			this.jtsex.setSelectedItem(Sex.Жінка);
 		}
 		
-		jtidname.setSelectedItem(jt.getValueAt(sr, 8).toString());
+		this.jtidname.setSelectedItem(jt.getValueAt(sr, 8).toString());
 		}
 	}
 	
 	//Метод підготовка до введення нового запису
 	void prepereAdd(){
-		jtname.setText(null);
-		jtfathersname.setText(null);
-		jtposition.setText(null);
-		jttablenumber.setText(null);
-		jtpercent.setText(null);
+		jtname.setText(new String());
+		jtfathersname.setText(new String());
+		jtposition.setText(new String());
+		jttablenumber.setText(new String());
+		jtpercent.setText(new String());
 		jtsex.setSelectedItem(null);
 		jtidname.setSelectedItem(null);
 		tabevent(jtlastname);
@@ -489,28 +492,18 @@ public class FormHumans extends JFrame {
 	void getDani(){
 		
 		sdb = new QueryHumansTable();
-		
 		try {
-			sdb.queryDbHumans();
+			listDBH=sdb.queryDbHumans();
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
 		
-		this.ld = sdb.listDBH.length;
+		this.ld = listDBH.length;
 		
-		model = new DefaultTableModel();		
-		
-		if(this.ld!=0){
-
-		for (int i = 0; i < sdb.namefields.length; i++) {
-			model.addColumn(sdb.namefields[i]);			
-		}
-			model.addRow(sdb.listDBH);
-
+		model = new DefaultTableModel(listDBH,sdb.namefields);		
 		setTablemodel();    			
-		}
 		setvisualTable();
 	}
 	
@@ -557,7 +550,7 @@ public class FormHumans extends JFrame {
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 					if(!flagdelete){
-						jtmode();
+						//jtmode();
 						}				
 				}
 			});
