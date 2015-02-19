@@ -21,14 +21,14 @@ public class QueryHumansTable {
 	private static Statement stmt;
 	public String[] namefields;
 	public String[] timefields;
-	public ArrayList<DbHumans> listDBH;
+	public Object[][] listDBH;
 	public ArrayList<DbTime> listDBT;
 	
 	//Метод вибірка даних із таблиці Humans повертає значення у вигляді ArrayList
-	public  void queryDbHumans() throws SQLException, ClassNotFoundException{
-		listDBH = new ArrayList<DbHumans>();
+	public  void queryDbHumans() throws SQLException, ClassNotFoundException{		
 		c = null;
 	    stmt = null;
+	    int rsSize=0;
 	    userProperties up = new userProperties();
 	    try {
 	        Class.forName("org.sqlite.JDBC");
@@ -55,10 +55,23 @@ public class QueryHumansTable {
 	        namefields = new String[rsmd.getColumnCount()];
 	        for (int i = 0; i < namefields.length; i++) {
 				namefields[i]=rsmd.getColumnName(i+1);
-			}				
+			}	
+	        
+	        if (rs != null) {
+	            rs.last();
+	            rsSize = rs.getRow();
+	            rs.beforeFirst();	            
+	        }
+	        
+	        listDBH = new Object[rsSize][namefields.length];
 	        
 	        while(rs.next()){
-	    		
+	        	for (int i = 0; i < rsSize; i++){
+	        		for (int j = 0; j < namefields.length; j++) {
+	        			
+	        		}
+	        	}
+	        	
 	        	DbHumans dbh = new DbHumans();
 	        	dbh.setId(rs.getInt(rsmd.getColumnName(1)));
 	        	dbh.setLastname(rs.getString(rsmd.getColumnName(2)));
@@ -71,7 +84,7 @@ public class QueryHumansTable {
 	        	dbh.setTimeId(rs.getInt(rsmd.getColumnName(9)));
 	        	dbh.setTimeName(rs.getString(rsmd.getColumnName(10)));
 
-	        	listDBH.add(dbh);
+	        	//listDBH.add(dbh);
 	        }
 	        
 	        rs.close();
