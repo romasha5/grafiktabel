@@ -11,8 +11,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,7 +28,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import tb.dbaseclasses.DbHumans;
 import tb.dbprovider.QueryHumansTable;
 import tb.start.Start;
 
@@ -78,7 +75,6 @@ public class FormHumans extends JFrame {
 	Boolean flagaddchange=false;
 	Boolean flagdelete = false;
 	QueryHumansTable sdb;
-	private Object[][] rowdatas;	
 	DefaultTableModel model;
 
 	/**
@@ -104,8 +100,7 @@ public class FormHumans extends JFrame {
 		});
 		
 		getDani();		    						
-		
-		
+				
 		getDaniTime();		
 		setJTtextFields(str);
 		jtmode();
@@ -502,30 +497,18 @@ public class FormHumans extends JFrame {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		ArrayList<DbHumans> listDBH = sdb.listDBH;
-		rowdatas = new Object[listDBH.size()][sdb.namefields.length];
-		this.ld = listDBH.size();
+		
+		this.ld = sdb.listDBH.length;
+		
 		model = new DefaultTableModel();		
 		
-		if(listDBH.size()!=0){
+		if(this.ld!=0){
 
 		for (int i = 0; i < sdb.namefields.length; i++) {
 			model.addColumn(sdb.namefields[i]);			
 		}
+			model.addRow(sdb.listDBH);
 
-		for(int i = 0; i < listDBH.size(); i++){
-				rowdatas[i][0]=listDBH.get(i).getId();
-				rowdatas[i][1]=listDBH.get(i).getLastname();
-				rowdatas[i][2]=listDBH.get(i).getName();
-				rowdatas[i][3]=listDBH.get(i).getFathersname();
-				rowdatas[i][4]=listDBH.get(i).getPosition();
-				rowdatas[i][5]=listDBH.get(i).getTablenumber();
-				rowdatas[i][6]=listDBH.get(i).getPercent();
-				rowdatas[i][7]=listDBH.get(i).getSex();
-				rowdatas[i][8]=listDBH.get(i).getTimeId();
-				rowdatas[i][9]=listDBH.get(i).getTimeName();
-			model.addRow(rowdatas[i]);
-		}
 		setTablemodel();    			
 		}
 		setvisualTable();
