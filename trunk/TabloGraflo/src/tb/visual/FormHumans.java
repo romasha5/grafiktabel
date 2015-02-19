@@ -415,7 +415,7 @@ public class FormHumans extends JFrame {
 		
 		if(this.ld>0){
 		int sr = jt.getSelectedRow();		
-		this.jtlastname.setText(jt.getValueAt(sr, 1).toString());
+		this.jtlastname.setText(model.getValueAt(sr, 1).toString());
 		this.jtname.setText(jt.getValueAt(sr, 2).toString());
 		this.jtfathersname.setText(jt.getValueAt(sr, 3).toString());
 		this.jtposition.setText(jt.getValueAt(sr, 4).toString());
