@@ -102,8 +102,8 @@ public class FormHumans extends JFrame {
 				}
 		});
 		
-		getDani();		    						
-				
+				    						
+		getDani();		
 		getDaniTime();		
 		setJTtextFields(str);
 		jtmode();
@@ -505,6 +505,7 @@ public class FormHumans extends JFrame {
 		model = new DefaultTableModel(listDBH,sdb.namefields);		
 		setTablemodel();    			
 		setvisualTable();
+		
 	}
 	
 	//Отримання даних з таблиці часові графіки
