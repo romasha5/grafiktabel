@@ -8,11 +8,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
-import tb.dbaseclasses.DbTime;
 import tb.properties.userProperties;
 
 public class QueryHumansTable {
@@ -22,7 +19,7 @@ public class QueryHumansTable {
 	public String[] namefields;
 	public String[] timefields;
 	public Object[][] listDBH;
-	public ArrayList<DbTime> listDBT;
+	public Object[][] listDBT;
 	
 	//Метод вибірка даних із таблиці Humans повертає значення 
 	public  Object[][] queryDbHumans() throws SQLException, ClassNotFoundException{		
@@ -53,9 +50,7 @@ public class QueryHumansTable {
 	        		+ "HUMANS.[IDTIME] AS \"РГ\","
 	        		+ "TIME.[NAME] AS \"ГРАФІК\""
 	        		+ "FROM HUMANS LEFT JOIN TIME "
-	        		+ "ON HUMANS.IDTIME=TIME.ID ORDER BY HUMANS.[id]");
-	        
-	       
+	        		+ "ON HUMANS.IDTIME=TIME.ID ORDER BY HUMANS.[id]");	        	      
 
 	        
 	        ResultSetMetaData rsmd = rs.getMetaData();
@@ -66,7 +61,7 @@ public class QueryHumansTable {
 				namefields[i]=rsmd.getColumnName(i+1);
 			}	
 	        
-	        listDBH = new Object[rsSize][namefields.length];
+	        this.listDBH = new Object[rsSize][namefields.length];
 	        int i=0;
 	        while(rs.next()){
 	        		for (int j = 0; j < namefields.length; j++) {
@@ -99,44 +94,9 @@ public class QueryHumansTable {
 	      }
 		return listDBH;
 		
-	}
+	}	
 	
-	//Метод вибірка даних із таблиці Time повертає значення у вигляді ArrayList
-	public void queryDbTime() throws SQLException, ClassNotFoundException{
-		listDBT = new ArrayList<DbTime>();
-		c = null;
-	    stmt = null;
-	    userProperties up = new userProperties();
-	    try {
-	        Class.forName("org.sqlite.JDBC");
-	        c = DriverManager.getConnection(up.getConStr());
-	        c.setAutoCommit(false);
-	        
-	        stmt = c.createStatement();
-	        
-	        ResultSet rs = stmt.executeQuery("select * from time order by name");
-	        
-	        while(rs.next()){
-	        	DbTime dbt = new DbTime();
-	        	dbt.setId(rs.getInt(1));
-	        	dbt.setName(rs.getString(2));
-	        	listDBT.add(dbt);
-	        }
-	        timefields = new String[listDBT.size()];      
-	        for (int i = 0; i < listDBT.size(); i++) {
-				timefields[i]=listDBT.get(i).getName();
-			}				
-	        
-	        
-	        rs.close();
-	        stmt.close();
-	        c.close();
-	      } catch ( Exception e ) {
-	        JOptionPane.showMessageDialog(null,e.getClass().getName() + ": " + e.getMessage() );
-	      }
-	}
-	
-		  public static void queryDelete(String table,String id )
+	public static void queryDelete(String table,String id )
 		  {	    
 		    userProperties up = new userProperties();
 			c = null;
