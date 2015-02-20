@@ -30,6 +30,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import tb.dbprovider.QueryHumansTable;
+import tb.dbprovider.QueryTimeTable;
 import tb.start.Start;
 
 public class FormHumans extends JFrame {
@@ -72,13 +73,16 @@ public class FormHumans extends JFrame {
 	JButton jbexit;
 
 	Integer ld;
+	Integer td;
 	Boolean flag = false;
 	Boolean flagaddchange=false;
 	Boolean flagdelete = false;
 	QueryHumansTable sdb;
+	QueryTimeTable tdb;
 	DefaultTableModel model;
 
 	private Object[][] listDBH;
+	private Object[][] listDBT;
 
 	/**
 	 * Конструктор форми "Довідник працівників"
@@ -96,293 +100,143 @@ public class FormHumans extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-					closeApp(str);
-				}
-		});
+		getDani();
+		getDaniTime();
+		setJLabel();
+		setJTtextFields();
+		setJButton();
 		
-				    						
-		getDani();		
-		getDaniTime();		
-		setJTtextFields(str);
-		jtmode();
+		//allListeners(str);
+		//getDani();		
+				
+		
+		//jtmode();
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);		
 	}
 
-	//Метод розміщення елементів управління
-	void setJTtextFields(Start str) {
+	//Метод розміщення Label
+	void setJLabel() {
 		this.jllastname = new JLabel(sdb.namefields[1]+":");
 		this.jllastname.setBounds(10, 415, 100, 20);
 		this.jllastname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.contentPane.add(this.jllastname);
-		
-		this.jtlastname = new JTextField();
-		this.jtlastname.setFont(new Font("Tahoma", Font.BOLD, 14));
-		this.jtlastname.setBounds(125, 415, 150, 20);
-		this.jtlastname.setEditable(false);
-		this.jtlastname.setFocusTraversalKeysEnabled(false);
-		this.contentPane.add(this.jtlastname);
-		this.jtlastname.addKeyListener(new KeyAdapter() {
-		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 tabevent(jtname);
-		         }
-		      }
-		});
 		
 		this.jlname = new JLabel(sdb.namefields[2]+":");
 		this.jlname.setBounds(10, 440, 100, 20);
 		this.jlname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.contentPane.add(this.jlname);
 		
+		this.jlfathersname = new JLabel(sdb.namefields[3]+":");
+		this.jlfathersname.setBounds(10, 465, 150, 20);
+		this.jlfathersname.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.contentPane.add(this.jlfathersname);
+
+		this.jlposition = new JLabel(sdb.namefields[4]+":");
+		this.jlposition.setBounds(10, 490, 150, 20);
+		this.jlposition.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.contentPane.add(this.jlposition);
+
+		this.jltablenumber = new JLabel(sdb.namefields[5]+":");
+		this.jltablenumber.setBounds(285, 415, 150, 20);
+		this.jltablenumber.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.contentPane.add(this.jltablenumber);
+		
+		this.jlpercent = new JLabel(sdb.namefields[6]+":");
+		this.jlpercent.setBounds(285, 440, 150, 20);
+		this.jlpercent.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.contentPane.add(this.jlpercent);
+	
+		this.jlsex = new JLabel(sdb.namefields[7]+":");
+		this.jlsex.setBounds(285, 465, 150, 20);
+		this.jlsex.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.contentPane.add(this.jlsex);
+
+		this.jlidname = new JLabel(sdb.namefields[9]+":");
+		this.jlidname.setBounds(285, 490, 150, 20);
+		this.jlidname.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.contentPane.add(this.jlidname);
+	}
+	
+
+	//Метод розміщення TextFields
+	void setJTtextFields() {
+		this.jtlastname = new JTextField();
+		this.jtlastname.setFont(new Font("Tahoma", Font.BOLD, 14));
+		this.jtlastname.setBounds(125, 415, 150, 20);
+		this.jtlastname.setEditable(false);
+		this.jtlastname.setFocusTraversalKeysEnabled(false);
+		this.contentPane.add(this.jtlastname);
+
 		this.jtname = new JTextField();
 		this.jtname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtname.setBounds(125, 440, 150, 20);
 		this.jtname.setEditable(false);
 		this.jtname.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jtname);
-		this.jtname.addKeyListener(new KeyAdapter() {
-		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 tabevent(jtfathersname);
-		         }
-		      }
-		});
-		
-		this.jlfathersname = new JLabel(sdb.namefields[3]+":");
-		this.jlfathersname.setBounds(10, 465, 150, 20);
-		this.jlfathersname.setFont(new Font("Tahoma", Font.BOLD, 14));
-		this.contentPane.add(this.jlfathersname);
-		
+
 		this.jtfathersname = new JTextField();
 		this.jtfathersname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtfathersname.setBounds(125, 465, 150, 20);
 		this.jtfathersname.setEditable(false);
 		this.jtfathersname.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jtfathersname);
-		this.jtfathersname.addKeyListener(new KeyAdapter() {
-		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 tabevent(jtposition);
-		         }
-		      }
-		});
-		
-		this.jlposition = new JLabel(sdb.namefields[4]+":");
-		this.jlposition.setBounds(10, 490, 150, 20);
-		this.jlposition.setFont(new Font("Tahoma", Font.BOLD, 14));
-		this.contentPane.add(this.jlposition);
-		
+
 		this.jtposition = new JTextField();
 		this.jtposition.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtposition.setBounds(125, 490, 150, 20);
 		this.jtposition.setEditable(false);
 		this.jtposition.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jtposition);
-		this.jtposition.addKeyListener(new KeyAdapter() {
-		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 tabevent(jttablenumber);
-		         }
-		      }
-		});
-		
-		this.jltablenumber = new JLabel(sdb.namefields[5]+":");
-		this.jltablenumber.setBounds(285, 415, 150, 20);
-		this.jltablenumber.setFont(new Font("Tahoma", Font.BOLD, 14));
-		this.contentPane.add(this.jltablenumber);
-		
+
 		this.jttablenumber = new JTextField();
 		this.jttablenumber.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jttablenumber.setBounds(360, 415, 150, 20);
 		this.jttablenumber.setEditable(false);
 		this.jttablenumber.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jttablenumber);
-		this.jttablenumber.addKeyListener(new KeyAdapter() {
-		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 tabevent(jtpercent);
-		         }
-		      }
-		});
-		
-		this.jlpercent = new JLabel(sdb.namefields[6]+":");
-		this.jlpercent.setBounds(285, 440, 150, 20);
-		this.jlpercent.setFont(new Font("Tahoma", Font.BOLD, 14));
-		this.contentPane.add(this.jlpercent);
-		
+
 		this.jtpercent = new JTextField();
 		this.jtpercent.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtpercent.setBounds(360, 440, 150, 20);
 		this.jtpercent.setEditable(false);
 		this.jtpercent.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jtpercent);
-		this.jtpercent.addKeyListener(new KeyAdapter() {
-		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 jtsex.requestFocus();
-		        	 if(!flagaddchange){
-		        		 jtsex.setSelectedItem(null);
-		        		 }	        	 
-		         }
-		      }
-		});
-		
-		this.jlsex = new JLabel(sdb.namefields[7]+":");
-		this.jlsex.setBounds(285, 465, 150, 20);
-		this.jlsex.setFont(new Font("Tahoma", Font.BOLD, 14));
-		this.contentPane.add(this.jlsex);
-		
+
 		this.jtsex = new JComboBox<Sex>(Sex.values());
 		this.jtsex.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtsex.setBounds(360, 465, 150, 20);
 		this.jtsex.setEnabled(false);
 		this.jtsex.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jtsex);
-		this.jtsex.addKeyListener(new KeyAdapter() {
-		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {		        	 
-		        	 jtidname.requestFocus();
-		        	 if(!flagaddchange){
-		        		 jtidname.setSelectedItem(null);
-		        		 }
-		         }
-		      }
-		});
-		
-		this.jlidname = new JLabel(sdb.namefields[9]+":");
-		this.jlidname.setBounds(285, 490, 150, 20);
-		this.jlidname.setFont(new Font("Tahoma", Font.BOLD, 14));
-		this.contentPane.add(this.jlidname);
-		
+
 		this.jtidname = new JComboBox<String>();
-		for (int i = 0; i < sdb.timefields.length; i++) {
-			this.jtidname.addItem(sdb.timefields[i]);
-		}
-		
+		for (int i = 0; i < this.tdb.timefields.length; i++) {
+			this.jtidname.addItem(this.listDBT[i][1].toString());
+		}		
 		this.jtidname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.jtidname.setBounds(360, 490, 150, 20);
 		this.jtidname.setEnabled(false);
 		this.jtidname.setFocusTraversalKeysEnabled(false);
 		this.contentPane.add(this.jtidname);
-		this.jtidname.addKeyListener(new KeyAdapter() {
-		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 if(!flagaddchange){
-		        		 jbsave.setEnabled(true);
-		        		 jbsave.setForeground(Color.GREEN);
-		        		 jbsave.requestFocus();
-		        	 }
-		        	 else {
-		        		 jbsave.requestFocus();
-					}
-		         }
-		      }
-		});
-		
+	}
+	
+
+	//Метод розміщення Button
+	void setJButton() {
 		this.jbadd = new JButton("Додати");
 		this.jbadd.setBounds(530, 415, 100, 20);
 		this.contentPane.add(jbadd);
-		
-		this.jbadd.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if(!flag){
-					gochange();
-					prepereAdd();
-					jbadd.setText("Відміна");
-					jbadd.setForeground(Color.RED);
-					jbchange.setEnabled(false);
-					flag = true;
-				}
-				else {
-					jtmode();
-					revers();
-					jbadd.setText("Додати");
-					jbadd.setForeground(Color.BLACK);
-					jbchange.setEnabled(true);
-					jbsave.setEnabled(false);
-					flag = false;
-				}
-			}
-		});
-		
+				
 		this.jbchange = new JButton("Змінити");
 		this.jbchange.setBounds(530, 440, 100, 20);
 		this.contentPane.add(jbchange);
-		this.jbchange.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(!flag){
-					gochange();
-					jbchange.setText("Відміна");
-					jbchange.setForeground(Color.RED);
-					jbadd.setEnabled(false);
-					jtlastname.requestFocus(true);
-					jtlastname.selectAll();
-					flag = true;
-					flagaddchange = true;
-					jbsave.setEnabled(true);
-					jbsave.setForeground(Color.GREEN);
-				}
-				else {
-					jtmode();
-					revers();
-					jbchange.setText("Змінити");
-					jbchange.setForeground(Color.BLACK);
-					flagaddchange = false;
-					jbadd.setEnabled(true);
-					jbsave.setEnabled(false);
-					flag = false;
-				}
-				
-			}
-		});
 		
 		this.jbdelete = new JButton("Видалити");
 		this.jbdelete.setBounds(530, 465, 100, 20);
 		this.contentPane.add(jbdelete);
-		this.jbdelete.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int dr=JOptionPane.showConfirmDialog(null,"Запис буде вилучено. Продовжити?",
-								"Попередження",JOptionPane.YES_NO_OPTION);
-				if(dr == JOptionPane.YES_OPTION){
-					try{
-					flagdelete=!flagdelete;
-					String sel = jt.getValueAt(jt.getSelectedRow(), 0).toString();
-					QueryHumansTable.queryDelete("HUMANS", sel);
-					getDani();
-					jt.setModel(model);
-					jt.removeColumn(jt.getColumnModel().getColumn(8));
-					jt.getTableHeader().setReorderingAllowed(false);
-					
-				    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-				    jt.setRowSorter(sorter);
-					jt.getColumnModel().getColumn(0).setPreferredWidth(20);
-					jt.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-					jt.setRowSelectionInterval(0, 0);
-					}
-					catch(IndexOutOfBoundsException ex){
-
-						}
-					}
-					jt.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-						
-						@Override
-						public void valueChanged(ListSelectionEvent e) {
-							if(!flagdelete){jtmode();}				
-						}
-					});
-				}						
-		});
-		
+	
 		this.jbsave = new JButton("Зберегти");
 		this.jbsave.setBounds(530, 490, 100, 20);
 		this.jbsave.setEnabled(false);
@@ -399,16 +253,9 @@ public class FormHumans extends JFrame {
 		this.jbexit = new JButton();
 		this.jbexit.setIcon(new ImageIcon(getClass().getResource("/icons/door.png")));
 		this.jbexit.setBounds(740, 415, 50, 95);
-		this.contentPane.add(jbexit);
-		
-		this.jbexit.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				closeApp(str);	
-			}
-		});
+		this.contentPane.add(jbexit);		
 	}
+	
 	
 	//Метод заповнює текстові та інші елементи значеннями
 	void jtmode(){
@@ -488,35 +335,30 @@ public class FormHumans extends JFrame {
 		}
 	}
 	
-	//Отримання даних в TableModel із таблиці працівники
-	void getDani(){
-		
-		sdb = new QueryHumansTable();
+	//Отримання даних із таблиці працівники
+	void getDani(){		
+		this.sdb = new QueryHumansTable();
 		try {
-			listDBH=sdb.queryDbHumans();
+			this.listDBH=this.sdb.queryDbHumans();
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
-		}
-		
-		this.ld = listDBH.length;
-		
-		model = new DefaultTableModel(listDBH,sdb.namefields);		
-		setTablemodel();    			
-		setvisualTable();
-		
+		}		
+		this.ld = listDBH.length;				
 	}
 	
 	//Отримання даних з таблиці часові графіки
 	void getDaniTime(){
+		this.tdb = new QueryTimeTable();
 		try {
-			sdb.queryDbTime();
+			this.listDBT=this.tdb.queryDbTime();			
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
+		this.td = listDBT.length;
 	}
 
 	//model чіпляю до таблиці
@@ -535,6 +377,9 @@ public class FormHumans extends JFrame {
 	}
 	
 	void setvisualTable(){
+		model = new DefaultTableModel(listDBH,sdb.namefields);		
+		setTablemodel();    			
+		
 		jsp = new JScrollPane(jt);
 		jsp.setBounds(10, 10, 780, 400);
 		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -567,5 +412,190 @@ public class FormHumans extends JFrame {
 		jt.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jt.setRowSelectionInterval(0, 0);
 		}
+	}
+
+	//Всі слухачі
+	void allListeners(Start str){
+		//Закриття фрейму (основного)
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+					closeApp(str);
+				}
+		});
+		
+		this.jtlastname.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 tabevent(jtname);
+		         }
+		      }
+		});
+		
+		this.jtname.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 tabevent(jtfathersname);
+		         }
+		      }
+		});
+		
+		this.jtfathersname.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 tabevent(jtposition);
+		         }
+		      }
+		});
+		
+		this.jtposition.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 tabevent(jttablenumber);
+		         }
+		      }
+		});
+		
+		this.jttablenumber.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 tabevent(jtpercent);
+		         }
+		      }
+		});
+		
+		this.jtpercent.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 jtsex.requestFocus();
+		        	 if(!flagaddchange){
+		        		 jtsex.setSelectedItem(null);
+		        		 }	        	 
+		         }
+		      }
+		});
+		
+		this.jtsex.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {		        	 
+		        	 jtidname.requestFocus();
+		        	 if(!flagaddchange){
+		        		 jtidname.setSelectedItem(null);
+		        		 }
+		         }
+		      }
+		});
+		
+		this.jtidname.addKeyListener(new KeyAdapter() {
+		     public void keyPressed(KeyEvent e) {       
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 if(!flagaddchange){
+		        		 jbsave.setEnabled(true);
+		        		 jbsave.setForeground(Color.GREEN);
+		        		 jbsave.requestFocus();
+		        	 }
+		        	 else {
+		        		 jbsave.requestFocus();
+					}
+		         }
+		      }
+		});
+		
+		this.jbadd.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(!flag){
+					gochange();
+					prepereAdd();
+					jbadd.setText("Відміна");
+					jbadd.setForeground(Color.RED);
+					jbchange.setEnabled(false);
+					flag = true;
+				}
+				else {
+					jtmode();
+					revers();
+					jbadd.setText("Додати");
+					jbadd.setForeground(Color.BLACK);
+					jbchange.setEnabled(true);
+					jbsave.setEnabled(false);
+					flag = false;
+				}
+			}
+		});
+		
+		this.jbchange.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(!flag){
+					gochange();
+					jbchange.setText("Відміна");
+					jbchange.setForeground(Color.RED);
+					jbadd.setEnabled(false);
+					jtlastname.requestFocus(true);
+					jtlastname.selectAll();
+					flag = true;
+					flagaddchange = true;
+					jbsave.setEnabled(true);
+					jbsave.setForeground(Color.GREEN);
+				}
+				else {
+					jtmode();
+					revers();
+					jbchange.setText("Змінити");
+					jbchange.setForeground(Color.BLACK);
+					flagaddchange = false;
+					jbadd.setEnabled(true);
+					jbsave.setEnabled(false);
+					flag = false;
+				}
+				
+			}
+		});
+		
+		this.jbdelete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int dr=JOptionPane.showConfirmDialog(null,"Запис буде вилучено. Продовжити?",
+								"Попередження",JOptionPane.YES_NO_OPTION);
+				if(dr == JOptionPane.YES_OPTION){
+					try{
+					flagdelete=!flagdelete;
+					String sel = jt.getValueAt(jt.getSelectedRow(), 0).toString();
+					QueryHumansTable.queryDelete("HUMANS", sel);
+					getDani();
+					jt.setModel(model);
+					jt.removeColumn(jt.getColumnModel().getColumn(8));
+					jt.getTableHeader().setReorderingAllowed(false);
+					
+				    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+				    jt.setRowSorter(sorter);
+					jt.getColumnModel().getColumn(0).setPreferredWidth(20);
+					jt.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+					jt.setRowSelectionInterval(0, 0);
+					}
+					catch(IndexOutOfBoundsException ex){
+
+						}
+					}
+					jt.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+						
+						@Override
+						public void valueChanged(ListSelectionEvent e) {
+							if(!flagdelete){jtmode();}				
+						}
+					});
+				}						
+		});
+		
+		this.jbexit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				closeApp(str);	
+			}
+		});
 	}
 }
