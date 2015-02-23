@@ -104,13 +104,10 @@ public class FormHumans extends JFrame {
 		getDaniTime();
 		setJLabel();
 		setJTtextFields();
-		setJButton();
-		
-		//allListeners(str);
-		//getDani();		
+		setJButton();		
+		allListeners(str);
+		setvisualTable();		
 				
-		
-		//jtmode();
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);		
