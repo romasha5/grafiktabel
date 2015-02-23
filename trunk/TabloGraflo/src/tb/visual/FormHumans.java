@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import tb.dbaseclasses.DbHumans;
 import tb.dbprovider.QueryHumansTable;
 import tb.dbprovider.QueryTimeTable;
 import tb.start.Start;
@@ -103,11 +104,10 @@ public class FormHumans extends JFrame {
 		getDani();
 		getDaniTime();
 		setJLabel();
-		setJTtextFields();
+		setJTtextFields();	
 		setJButton();		
 		allListeners(str);
 		setvisualTable();		
-				
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);		
@@ -561,17 +561,6 @@ public class FormHumans extends JFrame {
 					try{
 					flagdelete=!flagdelete;
 					String sel = jt.getValueAt(jt.getSelectedRow(), 0).toString();
-					QueryHumansTable.queryDelete("HUMANS", sel);
-					getDani();
-					jt.setModel(model);
-					jt.removeColumn(jt.getColumnModel().getColumn(8));
-					jt.getTableHeader().setReorderingAllowed(false);
-					
-				    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-				    jt.setRowSorter(sorter);
-					jt.getColumnModel().getColumn(0).setPreferredWidth(20);
-					jt.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-					jt.setRowSelectionInterval(0, 0);
 					}
 					catch(IndexOutOfBoundsException ex){
 
@@ -594,5 +583,24 @@ public class FormHumans extends JFrame {
 				closeApp(str);	
 			}
 		});
+	}
+	
+	void insertToTableHumans(){
+		int id=0;
+		for (int i = 0; i < listDBT.length; i++) {			
+				if (listDBT[i][1]==this.jtidname.getSelectedItem().toString()) {
+					id=(Integer)listDBT[i][0];
+				}				
+		}	
+		
+		DbHumans dbh = new DbHumans(this.jtlastname.getText(),
+									this.jtname.getText(),
+									this.jtfathersname.getText(),
+									this.jtposition.getText(),
+									Integer.valueOf(this.jttablenumber.getText()),
+									Float.valueOf(this.jtpercent.getText()),
+									this.jtsex.getSelectedItem().toString(),
+									id);
+		this.sdb.queryInsert(dbh);
 	}
 }

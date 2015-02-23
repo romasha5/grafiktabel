@@ -8,8 +8,10 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+
 import javax.swing.JOptionPane;
 
+import tb.dbaseclasses.DbHumans;
 import tb.properties.userProperties;
 
 public class QueryHumansTable {
@@ -96,7 +98,7 @@ public class QueryHumansTable {
 		
 	}	
 	
-	public static void queryDelete(String table,String id )
+	public void queryDelete(String table,String id ) throws SQLException
 		  {	    
 		    userProperties up = new userProperties();
 			c = null;
@@ -112,28 +114,37 @@ public class QueryHumansTable {
 			  stmt.close();
 			  c.close();		      
 		    } catch ( Exception e ) {
-		      JOptionPane.showMessageDialog(null,e.getClass().getName() + ": " + e.getMessage() );	      
+		      JOptionPane.showMessageDialog(null,e.getClass().getName() + ": " + e.getMessage() );
+			  c.rollback();
+			  stmt.close();
+			  c.close();
 		    }
 		  }
-		  
-		  public static void commit(){
-		    try {
-				c.commit();
-			    stmt.close();
-			    c.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		  }
-		  
-		  public static void rollbac(){
-		    try {
-				c.rollback();
-			    stmt.close();
-			    c.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		  }
 
+	public void queryInsert( DbHumans dbh )
+	  {
+	    Connection c = null;
+	    Statement stmt = null;
+	    try {
+	      Class.forName("org.sqlite.JDBC");
+	      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+	      c.setAutoCommit(false);
+	      stmt = c.createStatement();
+	      
+	      String sql = "INSERT INTO HUMANS (LASTNAME,NAME,FATHERSNAME,POSITION,"
+	      		+ "TABLENAMBER,PERCENT,SEX,IDTIME) " +
+	                   "VALUES ("+dbh.getLastname()+","+dbh.getName()+
+	                   ","+dbh.getFathersname()+","+dbh.getPosition()+
+	                   ","+dbh.getTablenumber()+","+dbh.getPercent()+
+	                   ","+dbh.getSex()+","+dbh.getTimeId()+ ";)"; 
+	      stmt.executeUpdate(sql);
+
+	      stmt.close();
+	      c.commit();
+	      c.close();
+	    } catch ( Exception e ) {
+	    	JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
+	      System.exit(0);
+	    }
+	 }
 }
