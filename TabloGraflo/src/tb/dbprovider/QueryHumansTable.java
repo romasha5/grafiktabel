@@ -121,7 +121,7 @@ public class QueryHumansTable {
 		    }
 		  }
 
-	public void queryInsert( DbHumans dbh )
+	public void queryInsert( DbHumans dbh ) 
 	  {
 	    Connection c = null;
 	    Statement stmt = null;
@@ -141,8 +141,8 @@ public class QueryHumansTable {
 	      stmt.close();
 	      c.commit();
 	      c.close();
-	    } catch ( Exception e ) {
-	    	JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );	      
+	    } catch ( Exception e ) {	    		    	
+	    	JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
 	    }
 	 }
 	
