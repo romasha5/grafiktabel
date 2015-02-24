@@ -157,13 +157,13 @@ public class QueryHumansTable {
 	      c.setAutoCommit(false);
 	      stmt = c.createStatement();	     
 	      stmt.executeUpdate("UPDATE HUMANS SET LASTNAME='"+dbh.getLastname()
-	      		+ "',NAME='"+dbh.getName()
+	    		+ "',NAME='"+dbh.getName()
 	      		+ "',FATHERSNAME='"+dbh.getFathersname()
 	      		+ "',POSITION='"+dbh.getPosition()
 	      		+ "',TABLENUMBER='"+dbh.getTablenumber()
 		      	+ "',PERCENT='"+dbh.getPercent()
 		      	+ "',SEX='"+dbh.getSex()
-		      	+ "',IDTIME='"+dbh.getTimeId()+"' WHERE ID='"+dbh.getId()+"')");
+		      	+ "',IDTIME='"+dbh.getTimeId()+"' WHERE ID='"+dbh.getId()+"';");
 
 	      stmt.close();
 	      c.commit();
