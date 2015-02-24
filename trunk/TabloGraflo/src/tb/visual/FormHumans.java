@@ -511,6 +511,7 @@ public class FormHumans extends JFrame {
 					jbadd.setText("Відміна");
 					jbadd.setForeground(Color.RED);
 					jbchange.setEnabled(false);
+					
 					flag = true;
 				}
 				else {
@@ -612,15 +613,30 @@ public class FormHumans extends JFrame {
 				}				
 		}	
 		
-		DbHumans dbh = new DbHumans(this.jtlastname.getText(),
-									this.jtname.getText(),
-									this.jtfathersname.getText(),
-									this.jtposition.getText(),
-									Integer.valueOf(this.jttablenumber.getText()),
-									Float.valueOf(this.jtpercent.getText()),
-									this.jtsex.getSelectedItem().toString(),
-									id);
-		this.sdb.queryInsert(dbh);
+		int tablenumber;
+		float percent;
+		try {
+			tablenumber=Integer.valueOf(this.jttablenumber.getText());	
+			percent=Float.valueOf(this.jtpercent.getText());
+			DbHumans dbh = new DbHumans(this.jtlastname.getText(),
+					this.jtname.getText(),
+					this.jtfathersname.getText(),
+					this.jtposition.getText(),
+					tablenumber,
+					percent,
+					this.jtsex.getSelectedItem().toString(),
+					id);
+            this.sdb.queryInsert(dbh);
+		} catch (Exception e) {
+			int dr = JOptionPane.showConfirmDialog(null, "В полі 'Табельний №' або 'Відсоток' не цифрові дані.", 
+												"Попередженння", JOptionPane.YES_OPTION);
+			if (dr==JOptionPane.YES_OPTION) {
+				jttablenumber.requestFocus();
+				jttablenumber.selectAll();
+			}
+		}
+		
+
 	}
 	
 	void UpdateToTableHumans(){
