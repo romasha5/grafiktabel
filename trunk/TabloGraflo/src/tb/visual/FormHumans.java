@@ -76,6 +76,7 @@ public class FormHumans extends JFrame {
 	Integer ld;
 	Integer td;
 	Integer save=3;
+	String idhumans;
 	Boolean flag = false;
 	Boolean flagaddchange=false;
 	Boolean flagdelete = false;
@@ -259,7 +260,8 @@ public class FormHumans extends JFrame {
 	void jtmode(){
 		
 		if(this.ld>0){
-		int sr = jt.getSelectedRow();	
+		int sr = jt.getSelectedRow();
+		this.idhumans=model.getValueAt(sr, 0).toString();
 		this.jtlastname.setText(model.getValueAt(sr, 1).toString());
 		this.jtname.setText(jt.getValueAt(sr, 2).toString());
 		this.jtfathersname.setText(jt.getValueAt(sr, 3).toString());
@@ -592,9 +594,12 @@ public class FormHumans extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (save==1) {
-					insertToTableHumans();
+					insertToTableHumans();					
 				}
-				
+				else if(save==0) {
+					UpdateToTableHumans();
+				}
+				jbsave.setEnabled(false);
 			}
 		});
 	}
@@ -616,5 +621,26 @@ public class FormHumans extends JFrame {
 									this.jtsex.getSelectedItem().toString(),
 									id);
 		this.sdb.queryInsert(dbh);
+	}
+	
+	void UpdateToTableHumans(){
+		int id=0;
+		
+		for (int i = 0; i < listDBT.length; i++) {			
+				if (listDBT[i][1]==this.jtidname.getSelectedItem().toString()) {
+					id=(Integer)listDBT[i][0];
+				}				
+		}	
+		
+		DbHumans dbh = new DbHumans(Integer.valueOf(this.idhumans),
+									this.jtlastname.getText(),
+									this.jtname.getText(),
+									this.jtfathersname.getText(),
+									this.jtposition.getText(),
+									Integer.valueOf(this.jttablenumber.getText()),
+									Float.valueOf(this.jtpercent.getText()),
+									this.jtsex.getSelectedItem().toString(),
+									id);
+		this.sdb.queryUpdate(dbh);
 	}
 }
