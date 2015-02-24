@@ -75,6 +75,7 @@ public class FormHumans extends JFrame {
 
 	Integer ld;
 	Integer td;
+	Integer save=3;
 	Boolean flag = false;
 	Boolean flagaddchange=false;
 	Boolean flagdelete = false;
@@ -502,6 +503,7 @@ public class FormHumans extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(!flag){
+					save=1;
 					gochange();
 					prepereAdd();
 					jbadd.setText("Відміна");
@@ -526,6 +528,7 @@ public class FormHumans extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!flag){
+					save=0;
 					gochange();
 					jbchange.setText("Відміна");
 					jbchange.setForeground(Color.RED);
@@ -581,6 +584,17 @@ public class FormHumans extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				closeApp(str);	
+			}
+		});
+		
+		this.jbsave.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (save==1) {
+					insertToTableHumans();
+				}
+				
 			}
 		});
 	}
