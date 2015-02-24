@@ -93,13 +93,14 @@ public class DbHumans  {
 	public DbHumans (Integer id,String lastname, String name, String fathersname,
 			String position, Integer tablenumber, Float percent, String sex,
 			Integer timeId){
-	this.lastname=lastname;
-	this.name=name;
-	this.fathersname=fathersname;
-	this.position=position;
-	this.tablenumber=tablenumber;
-	this.percent=percent;
-	this.sex=sex;
-	this.timeId=timeId;
+		this.id=id;
+		this.lastname=lastname;
+		this.name=name;
+		this.fathersname=fathersname;
+		this.position=position;
+		this.tablenumber=tablenumber;
+		this.percent=percent;
+		this.sex=sex;
+		this.timeId=timeId;
 }
 }
