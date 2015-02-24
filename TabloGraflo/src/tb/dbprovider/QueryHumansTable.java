@@ -126,25 +126,50 @@ public class QueryHumansTable {
 	    Connection c = null;
 	    Statement stmt = null;
 	    try {
+	    	userProperties up = new userProperties();
 	      Class.forName("org.sqlite.JDBC");
-	      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+	      c = DriverManager.getConnection(up.getConStr());
 	      c.setAutoCommit(false);
-	      stmt = c.createStatement();
-	      
-	      String sql = "INSERT INTO HUMANS (LASTNAME,NAME,FATHERSNAME,POSITION,"
-	      		+ "TABLENAMBER,PERCENT,SEX,IDTIME) " +
-	                   "VALUES ("+dbh.getLastname()+","+dbh.getName()+
-	                   ","+dbh.getFathersname()+","+dbh.getPosition()+
-	                   ","+dbh.getTablenumber()+","+dbh.getPercent()+
-	                   ","+dbh.getSex()+","+dbh.getTimeId()+ ";)"; 
-	      stmt.executeUpdate(sql);
+	      stmt = c.createStatement();	     
+	      stmt.executeUpdate("INSERT INTO HUMANS (LASTNAME,NAME,FATHERSNAME,POSITION,"
+		      		+ "TABLENUMBER,PERCENT,SEX,IDTIME) " +
+	                   "VALUES ('"+dbh.getLastname()+"','"+dbh.getName()+
+	                   "','"+dbh.getFathersname()+"','"+dbh.getPosition()+
+	                   "','"+dbh.getTablenumber()+"','"+dbh.getPercent()+
+	                   "','"+dbh.getSex()+"','"+dbh.getTimeId()+ "')");
 
 	      stmt.close();
 	      c.commit();
 	      c.close();
 	    } catch ( Exception e ) {
-	    	JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );
-	      System.exit(0);
+	    	JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );	      
+	    }
+	 }
+	
+	public void queryUpdate( DbHumans dbh )
+	  {
+	    Connection c = null;
+	    Statement stmt = null;
+	    try {
+	    	userProperties up = new userProperties();
+	      Class.forName("org.sqlite.JDBC");
+	      c = DriverManager.getConnection(up.getConStr());
+	      c.setAutoCommit(false);
+	      stmt = c.createStatement();	     
+	      stmt.executeUpdate("UPDATE HUMANS SET LASTNAME='"+dbh.getLastname()
+	      		+ "',NAME='"+dbh.getName()
+	      		+ "',FATHERSNAME='"+dbh.getFathersname()
+	      		+ "',POSITION='"+dbh.getPosition()
+	      		+ "',TABLENUMBER='"+dbh.getTablenumber()
+		      	+ "',PERCENT='"+dbh.getPercent()
+		      	+ "',SEX='"+dbh.getSex()
+		      	+ "',IDTIME='"+dbh.getTimeId()+"' WHERE ID='"+dbh.getId()+"')");
+
+	      stmt.close();
+	      c.commit();
+	      c.close();
+	    } catch ( Exception e ) {
+	    	JOptionPane.showMessageDialog(null, e.getClass().getName() + ": " + e.getMessage() );	      
 	    }
 	 }
 }
