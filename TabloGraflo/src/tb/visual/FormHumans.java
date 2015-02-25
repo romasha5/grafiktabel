@@ -566,7 +566,7 @@ public class FormHumans extends JFrame {
 				if(dr == JOptionPane.YES_OPTION){
 					try{
 					flagdelete=!flagdelete;
-					String sel = jt.getValueAt(jt.getSelectedRow(), 0).toString();
+					//String sel = jt.getValueAt(jt.getSelectedRow(), 0).toString();
 					}
 					catch(IndexOutOfBoundsException ex){
 
@@ -612,41 +612,17 @@ public class FormHumans extends JFrame {
 					id=(Integer)listDBT[i][0];
 				}				
 		}	
-		
-		int tablenumber;
-		float percent;
-		boolean f=false;
-		try {
-			tablenumber=Integer.valueOf(this.jttablenumber.getText());	
-			f=!f;
-			percent=Float.valueOf(this.jtpercent.getText());
+						
 			DbHumans dbh = new DbHumans(this.jtlastname.getText(),
 					this.jtname.getText(),
 					this.jtfathersname.getText(),
 					this.jtposition.getText(),
-					tablenumber,
-					percent,
+					Integer.valueOf(this.jttablenumber.getText()),
+					Float.valueOf(this.jtpercent.getText()),
 					this.jtsex.getSelectedItem().toString(),
 					id);
             this.sdb.queryInsert(dbh);
-		} catch (Exception e) {
-			if (f) {
-				int dr = JOptionPane.showConfirmDialog(null, "В полі 'Відсоток' не цифрові дані.", 
-						"Попередженння", JOptionPane.YES_OPTION);
-					if (dr==JOptionPane.YES_OPTION) {
-						jtpercent.requestFocus();
-						jtpercent.selectAll();
-					}
-			}
-			else{
-				int dr = JOptionPane.showConfirmDialog(null, "В полі 'Табельний №' не цифрові дані.", 
-												"Попередженння", JOptionPane.YES_OPTION);
-				if (dr==JOptionPane.YES_OPTION) {
-					jttablenumber.requestFocus();
-					jttablenumber.selectAll();
-				}
-			}
-		}		
+					
 	}
 	
 	void UpdateToTableHumans(){
@@ -668,5 +644,12 @@ public class FormHumans extends JFrame {
 									this.jtsex.getSelectedItem().toString(),
 									id);
 		this.sdb.queryUpdate(dbh);
+	}
+
+	void testTextField(JTextField jtf){
+		String jt = jtf.getText();
+		if (jt == null || "".equals(jt) || jt.trim().length() == 0) {
+			
+		}
 	}
 }
