@@ -615,8 +615,10 @@ public class FormHumans extends JFrame {
 		
 		int tablenumber;
 		float percent;
+		boolean f=false;
 		try {
 			tablenumber=Integer.valueOf(this.jttablenumber.getText());	
+			f=!f;
 			percent=Float.valueOf(this.jtpercent.getText());
 			DbHumans dbh = new DbHumans(this.jtlastname.getText(),
 					this.jtname.getText(),
@@ -628,15 +630,23 @@ public class FormHumans extends JFrame {
 					id);
             this.sdb.queryInsert(dbh);
 		} catch (Exception e) {
-			int dr = JOptionPane.showConfirmDialog(null, "В полі 'Табельний №' або 'Відсоток' не цифрові дані.", 
-												"Попередженння", JOptionPane.YES_OPTION);
-			if (dr==JOptionPane.YES_OPTION) {
-				jttablenumber.requestFocus();
-				jttablenumber.selectAll();
+			if (f) {
+				int dr = JOptionPane.showConfirmDialog(null, "В полі 'Відсоток' не цифрові дані.", 
+						"Попередженння", JOptionPane.YES_OPTION);
+					if (dr==JOptionPane.YES_OPTION) {
+						jtpercent.requestFocus();
+						jtpercent.selectAll();
+					}
 			}
-		}
-		
-
+			else{
+				int dr = JOptionPane.showConfirmDialog(null, "В полі 'Табельний №' не цифрові дані.", 
+												"Попередженння", JOptionPane.YES_OPTION);
+				if (dr==JOptionPane.YES_OPTION) {
+					jttablenumber.requestFocus();
+					jttablenumber.selectAll();
+				}
+			}
+		}		
 	}
 	
 	void UpdateToTableHumans(){
