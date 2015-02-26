@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -25,8 +23,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -90,6 +86,8 @@ public class FormHumans extends JFrame {
 
 	private Object[][] listDBH;
 	private Object[][] listDBT;
+
+	private String infa;
 
 	/**
 	 * Конструктор форми "Довідник працівників"
@@ -286,6 +284,7 @@ public class FormHumans extends JFrame {
 	
 	//Метод підготовка до введення нового запису
 	void prepereAdd(){
+		jtlastname.setText(new String());
 		jtname.setText(new String());
 		jtfathersname.setText(new String());
 		jtposition.setText(new String());
@@ -329,7 +328,6 @@ public class FormHumans extends JFrame {
 	//Заповнює поля текстом "Введіть дані" і передає фокус на наступне
 	void tabevent(JTextField tf){
 		if(!flagaddchange){
-			tf.setText("Введіть дані");
    	 		tf.requestFocus();
    	 		tf.selectAll();
 		}
@@ -425,32 +423,28 @@ public class FormHumans extends JFrame {
 			public void windowClosing(WindowEvent e) {
 					closeApp(str);
 				}
-		});
-		
-		
+		});		
 		
 		this.jtlastname.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {  
 		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 jtname.requestFocus();
+		        	 tabevent(jtname);
 		    	 }
 		     }
 		});
 		
-
 		this.jtname.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
 		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 jtfathersname.requestFocus();
+		        	 tabevent(jtfathersname);
 		         }
 		      }
 		});
-		
-		
+				
 		this.jtfathersname.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
 		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 jtposition.requestFocus();
+		        	 tabevent(jtposition);
 		         }
 		      }
 		});
@@ -496,14 +490,7 @@ public class FormHumans extends JFrame {
 		this.jtidname.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
 		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 if(!flagaddchange){
-		        		 jbsave.setEnabled(true);
-		        		 jbsave.setForeground(Color.GREEN);
-		        		 jbsave.requestFocus();
-		        	 }
-		        	 else {
-		        		 jbsave.requestFocus();
-					}
+		        		 jbsave.requestFocus();					
 		         }
 		      }
 		});
@@ -519,7 +506,8 @@ public class FormHumans extends JFrame {
 					jbadd.setText("Відміна");
 					jbadd.setForeground(Color.RED);
 					jbchange.setEnabled(false);
-					
+					jbsave.setEnabled(true);
+	        		jbsave.setForeground(Color.GREEN);
 					flag = true;
 				}
 				else {
@@ -602,6 +590,7 @@ public class FormHumans extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+			if (!testTextField()){	
 				if (save==1) {
 					insertToTableHumans();					
 				}
@@ -609,6 +598,10 @@ public class FormHumans extends JFrame {
 					UpdateToTableHumans();
 				}
 				jbsave.setEnabled(false);
+			}
+			else {
+				
+			}
 			}
 		});
 	}
@@ -654,15 +647,33 @@ public class FormHumans extends JFrame {
 		this.sdb.queryUpdate(dbh);
 	}
 
-	void testTextField(JTextField jtf,JTextField ftj){
-		String jt = jtf.getText();
-		if (jt == null || "".equals(jt) || jt.trim().length() == 0) {
-			JOptionPane.showMessageDialog(null, "Поле не може бути пустим");
-			jtf.requestFocus();
-			return;
+	boolean testTextField(){
+		JTextField[] jtf = new JTextField[]{jtlastname,jtname,jtfathersname,
+							jtposition,jttablenumber,jtpercent};
+		JComboBox[]jcom = new JComboBox[]{jtsex, jtidname};
+		JLabel[]jlab = new JLabel[]{jllastname,jlname,jlfathersname,jlposition,
+							jltablenumber,jlpercent,jlsex,jlidname};
+		infa = new String();
+		for (int i = 0; i < jtf.length; i++) {
+			String jt = jtf[i].getText();
+			if (jt == null || "".equals(jt) || jt.trim().length() == 0) {
+				infa+=jlab[i].getText()+"\n";
+			}			
+		}	
+		for (int i = 0; i < jcom.length; i++) {
+			String tj = (String) jcom[i].getSelectedItem();
+			if (tj == null || "".equals(tj) || tj.trim().length() == 0) {
+				infa+=jlab[i+jtf.length].getText()+"\n";
+			}
 		}
+		if (infa.length()>0) {
+			JOptionPane.showMessageDialog(null, infa+"ЯВЛЯЮТЬСЯ ПУСТИМИ");
+			return true;
+		}	
 		else {
-			tabevent(ftj);
+			return false;
 		}
 	}
+
+	
 }
