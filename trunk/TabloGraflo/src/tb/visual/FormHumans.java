@@ -26,6 +26,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -412,7 +414,7 @@ public class FormHumans extends JFrame {
 	    jt.setRowSorter(sorter);
 		jt.getColumnModel().getColumn(0).setPreferredWidth(20);
 		jt.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jt.setRowSelectionInterval(0, 0);
+		jt.setRowSelectionInterval(0, 0);		
 		}
 	}
 
@@ -592,15 +594,22 @@ public class FormHumans extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			if (!testTextField()){	
 				if (save==1) {
-					insertToTableHumans();					
+					insertToTableHumans();	
+					JOptionPane.showMessageDialog(null, "Запис додано");					
 				}
 				else if(save==0) {
 					UpdateToTableHumans();
+					JOptionPane.showMessageDialog(null, "Запис змінено");
 				}
+				revers();
+				flag=!flag;
+				jbchange.setEnabled(true);
+				jbchange.setText("Змінити");
+				jbchange.setForeground(Color.BLACK);				
+				jbadd.setEnabled(true);
+				jbadd.setText("Додати");
+				jbadd.setForeground(Color.BLACK);				
 				jbsave.setEnabled(false);
-			}
-			else {
-				
 			}
 			}
 		});
@@ -661,7 +670,7 @@ public class FormHumans extends JFrame {
 			}			
 		}	
 		for (int i = 0; i < jcom.length; i++) {
-			String tj = (String) jcom[i].getSelectedItem();
+			String tj = jcom[i].getSelectedItem().toString();
 			if (tj == null || "".equals(tj) || tj.trim().length() == 0) {
 				infa+=jlab[i+jtf.length].getText()+"\n";
 			}
@@ -675,5 +684,4 @@ public class FormHumans extends JFrame {
 		}
 	}
 
-	
 }
