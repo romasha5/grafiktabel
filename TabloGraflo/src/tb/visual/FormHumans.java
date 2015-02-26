@@ -25,6 +25,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -426,21 +428,6 @@ public class FormHumans extends JFrame {
 		});
 		
 		
-		this.jtlastname.addFocusListener(new FocusListener() {
-			
-			@Override
-			public void focusLost(FocusEvent e) {
-				testTextField(jtlastname, jtname);
-				
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
-				jtlastname.setText("Введіть дані");
-				jtlastname.selectAll();
-			}
-		});
-		
 		
 		this.jtlastname.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {  
@@ -450,21 +437,7 @@ public class FormHumans extends JFrame {
 		     }
 		});
 		
-		this.jtname.addFocusListener(new FocusListener() {
-			
-			@Override
-			public void focusLost(FocusEvent e) {
-				testTextField(jtname, jtfathersname);
-				
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
-				jtname.setText("Введіть дані");
-				jtname.selectAll();
-			}
-		});
-		
+
 		this.jtname.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
 		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_TAB)) {
@@ -473,20 +446,6 @@ public class FormHumans extends JFrame {
 		      }
 		});
 		
-		this.jtfathersname.addFocusListener(new FocusListener() {
-			
-			@Override
-			public void focusLost(FocusEvent e) {
-				testTextField(jtfathersname, jtposition);
-				
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
-				jtfathersname.setText("Введіть дані");
-				jtfathersname.selectAll();
-			}
-		});
 		
 		this.jtfathersname.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
