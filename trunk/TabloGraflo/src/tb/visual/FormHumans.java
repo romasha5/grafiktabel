@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -423,33 +425,80 @@ public class FormHumans extends JFrame {
 				}
 		});
 		
+		
+		this.jtlastname.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				testTextField(jtlastname, jtname);
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				jtlastname.setText("Введіть дані");
+				jtlastname.selectAll();
+			}
+		});
+		
+		
 		this.jtlastname.addKeyListener(new KeyAdapter() {
-		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 tabevent(jtname);
-		         }
-		      }
+		     public void keyPressed(KeyEvent e) {  
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 jtname.requestFocus();
+		    	 }
+		     }
+		});
+		
+		this.jtname.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				testTextField(jtname, jtfathersname);
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				jtname.setText("Введіть дані");
+				jtname.selectAll();
+			}
 		});
 		
 		this.jtname.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 tabevent(jtfathersname);
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 jtfathersname.requestFocus();
 		         }
 		      }
 		});
 		
+		this.jtfathersname.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				testTextField(jtfathersname, jtposition);
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				jtfathersname.setText("Введіть дані");
+				jtfathersname.selectAll();
+			}
+		});
+		
 		this.jtfathersname.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
-		        	 tabevent(jtposition);
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		        	 jtposition.requestFocus();
 		         }
 		      }
 		});
 		
 		this.jtposition.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_TAB)) {
 		        	 tabevent(jttablenumber);
 		         }
 		      }
@@ -457,7 +506,7 @@ public class FormHumans extends JFrame {
 		
 		this.jttablenumber.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_TAB)) {
 		        	 tabevent(jtpercent);
 		         }
 		      }
@@ -465,7 +514,7 @@ public class FormHumans extends JFrame {
 		
 		this.jtpercent.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_TAB)) {
 		        	 jtsex.requestFocus();
 		        	 if(!flagaddchange){
 		        		 jtsex.setSelectedItem(null);
@@ -476,7 +525,7 @@ public class FormHumans extends JFrame {
 		
 		this.jtsex.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {		        	 
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_TAB)) {		        	 
 		        	 jtidname.requestFocus();
 		        	 if(!flagaddchange){
 		        		 jtidname.setSelectedItem(null);
@@ -487,7 +536,7 @@ public class FormHumans extends JFrame {
 		
 		this.jtidname.addKeyListener(new KeyAdapter() {
 		     public void keyPressed(KeyEvent e) {       
-		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) | (e.getKeyCode() == KeyEvent.VK_TAB)) {
+		         if ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_TAB)) {
 		        	 if(!flagaddchange){
 		        		 jbsave.setEnabled(true);
 		        		 jbsave.setForeground(Color.GREEN);
@@ -646,10 +695,15 @@ public class FormHumans extends JFrame {
 		this.sdb.queryUpdate(dbh);
 	}
 
-	void testTextField(JTextField jtf){
+	void testTextField(JTextField jtf,JTextField ftj){
 		String jt = jtf.getText();
 		if (jt == null || "".equals(jt) || jt.trim().length() == 0) {
-			
+			JOptionPane.showMessageDialog(null, "Поле не може бути пустим");
+			jtf.requestFocus();
+			return;
+		}
+		else {
+			tabevent(ftj);
 		}
 	}
 }
