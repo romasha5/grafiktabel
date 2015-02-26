@@ -600,6 +600,7 @@ public class FormHumans extends JFrame {
 				else if(save==0) {
 					UpdateToTableHumans();
 					JOptionPane.showMessageDialog(null, "Запис змінено");
+					
 				}
 				revers();
 				flag=!flag;
