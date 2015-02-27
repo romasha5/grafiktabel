@@ -10,7 +10,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
@@ -26,7 +25,6 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -90,8 +88,6 @@ public class FormHumans extends JFrame {
 
 	private String infa;
 
-	private TableModel model;
-
 	/**
 	 * Конструктор форми "Довідник працівників"
 	 * @throws HeadlessException
@@ -120,7 +116,8 @@ public class FormHumans extends JFrame {
 		setJTtextFields();	
 		setJButton();		
 		allListeners(str);
-		setvisualTable();		
+		setvisualTable();
+		setJsp();
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);		
@@ -362,39 +359,38 @@ public class FormHumans extends JFrame {
 
 	//model чіпляю до таблиці
 	void setTablemodel(){
-		jt = new JTable(model){
-            /**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
+		try {
+			jt = new JTable(sdb.queryDbHumans()){
+			    /**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 
-			@Override
-            public boolean isCellEditable(int arg0, int arg1) {
-                return false;
-            }
-        };
+				@Override
+			    public boolean isCellEditable(int arg0, int arg1) {
+			        return false;
+			    }
+			};
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	void setvisualTable(){				
 
-			try {
-				model = this.sdb.queryDbHumans();
-				this.ld = model.getRowCount();
+			try {				
+				this.ld = this.sdb.queryDbHumans().getRowCount();
 				setTablemodel();
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
- 					
-		jsp = new JScrollPane(jt);
-		jsp.setBounds(10, 10, 780, 400);
-		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		contentPane.add(jsp);
-		
-		jsp.setViewportView(jt);
-		
+
 		if(ld>0){
 			
 			
@@ -417,8 +413,17 @@ public class FormHumans extends JFrame {
 	    jt.setRowSorter(sorter);
 		jt.getColumnModel().getColumn(0).setPreferredWidth(20);
 		jt.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jt.setRowSelectionInterval(0, 0);		
+		jt.setRowSelectionInterval(0, 0);						
 		}
+	}
+	
+	void setJsp(){
+		jsp = new JScrollPane(jt);
+		jsp.setBounds(10, 10, 780, 400);
+		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		contentPane.add(jsp);		
+		jsp.setViewportView(jt);
 	}
 
 	//Всі слухачі
@@ -565,21 +570,17 @@ public class FormHumans extends JFrame {
 				int dr=JOptionPane.showConfirmDialog(null,"Запис буде вилучено. Продовжити?",
 								"Попередження",JOptionPane.YES_NO_OPTION);
 				if(dr == JOptionPane.YES_OPTION){
-					try{
-					flagdelete=!flagdelete;
-					//String sel = jt.getValueAt(jt.getSelectedRow(), 0).toString();
-					}
-					catch(IndexOutOfBoundsException ex){
-
+					//flagdelete=!flagdelete;
+					String ss = jt.getModel().getValueAt(jt.getSelectedRow(), 0).toString();
+					//jt.setRowSelectionInterval(jt.getSelectedRow()-1, index1);
+						try {
+							sdb.queryDelete(ss);
+							save=2;
+							refreshTable();							
+						} catch (SQLException e1) {
+							e1.printStackTrace();
 						}
 					}
-					jt.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-						
-						@Override
-						public void valueChanged(ListSelectionEvent e) {
-							if(!flagdelete){jtmode();}				
-						}
-					});
 				}						
 		});
 		
@@ -613,7 +614,8 @@ public class FormHumans extends JFrame {
 				jbadd.setEnabled(true);
 				jbadd.setText("Додати");
 				jbadd.setForeground(Color.BLACK);				
-				jbsave.setEnabled(false);
+				jbsave.setEnabled(false);	
+				refreshTable();					
 			}
 			}
 		});
@@ -688,4 +690,50 @@ public class FormHumans extends JFrame {
 		}
 	}
 
+	void refreshTable(){
+
+		int row = jt.getSelectedRow();
+		int lastrow = jt.getRowCount();
+		
+		try {				
+			this.ld = this.sdb.queryDbHumans().getRowCount();
+			setTablemodel();
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+
+		if(ld>0){				
+			jt.getSelectionModel().addListSelectionListener(new ListSelectionListener() {			
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					if(!flagdelete){
+						jtmode();
+					}				
+				}	
+			});		
+			jt.removeColumn(jt.getColumnModel().getColumn(8));
+			jt.getTableHeader().setReorderingAllowed(false);		
+			
+		    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jt.getModel());
+		    jt.setRowSorter(sorter);
+			jt.getColumnModel().getColumn(0).setPreferredWidth(20);
+			jt.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			
+			int newselrow = jt.getRowCount()-1;
+			
+			if(save==0){
+				jt.setRowSelectionInterval(row, row);
+				}
+			else if(save==1){
+				jt.setRowSelectionInterval(lastrow, lastrow);
+				}
+			else if(save==2){
+				jt.setRowSelectionInterval(newselrow, newselrow);
+			}
+			
+			jsp.setViewportView(jt);			
+		}
+	}
 }
