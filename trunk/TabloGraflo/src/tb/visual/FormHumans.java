@@ -676,7 +676,7 @@ public class FormHumans extends JFrame {
 			}			
 		}	
 		for (int i = 0; i < jcom.length; i++) {
-			String tj = jcom[i].getSelectedItem().toString();
+			String tj = String.valueOf(jcom[i].getSelectedItem());
 			if (tj == null || "".equals(tj) || tj.trim().length() == 0) {
 				infa+=jlab[i+jtf.length].getText()+"\n";
 			}
