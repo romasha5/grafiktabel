@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
@@ -26,11 +27,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import net.proteanit.sql.DbUtils;
 import tb.dbaseclasses.DbHumans;
 import tb.dbprovider.QueryHumansTable;
 import tb.dbprovider.QueryTimeTable;
@@ -82,14 +82,15 @@ public class FormHumans extends JFrame {
 	Boolean flag = false;
 	Boolean flagaddchange=false;
 	Boolean flagdelete = false;
+	
 	QueryHumansTable sdb;
 	QueryTimeTable tdb;
-	DefaultTableModel model;
 
-	private Object[][] listDBH;
 	private Object[][] listDBT;
 
 	private String infa;
+
+	private TableModel model;
 
 	/**
 	 * Конструктор форми "Довідник працівників"
@@ -106,10 +107,16 @@ public class FormHumans extends JFrame {
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.sdb= new QueryHumansTable();
 		
-		getDani();
 		getDaniTime();
-		setJLabel();
+		try {
+			setJLabel();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
 		setJTtextFields();	
 		setJButton();		
 		allListeners(str);
@@ -120,43 +127,43 @@ public class FormHumans extends JFrame {
 	}
 
 	//Метод розміщення Label
-	void setJLabel() {
-		this.jllastname = new JLabel(sdb.namefields[1]+":");
+	void setJLabel() throws ClassNotFoundException, SQLException {
+		this.jllastname = new JLabel("ПРІЗВИЩЕ:");
 		this.jllastname.setBounds(10, 415, 100, 20);
 		this.jllastname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.contentPane.add(this.jllastname);
 		
-		this.jlname = new JLabel(sdb.namefields[2]+":");
+		this.jlname = new JLabel("ІМ'Я");
 		this.jlname.setBounds(10, 440, 100, 20);
 		this.jlname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.contentPane.add(this.jlname);
 		
-		this.jlfathersname = new JLabel(sdb.namefields[3]+":");
+		this.jlfathersname = new JLabel("ПО-БАТЬКОВІ:");
 		this.jlfathersname.setBounds(10, 465, 150, 20);
 		this.jlfathersname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.contentPane.add(this.jlfathersname);
 
-		this.jlposition = new JLabel(sdb.namefields[4]+":");
+		this.jlposition = new JLabel("ПОСАДА:");
 		this.jlposition.setBounds(10, 490, 150, 20);
 		this.jlposition.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.contentPane.add(this.jlposition);
 
-		this.jltablenumber = new JLabel(sdb.namefields[5]+":");
+		this.jltablenumber = new JLabel("ТАБ. №:");
 		this.jltablenumber.setBounds(285, 415, 150, 20);
 		this.jltablenumber.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.contentPane.add(this.jltablenumber);
 		
-		this.jlpercent = new JLabel(sdb.namefields[6]+":");
+		this.jlpercent = new JLabel("%:");
 		this.jlpercent.setBounds(285, 440, 150, 20);
 		this.jlpercent.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.contentPane.add(this.jlpercent);
 	
-		this.jlsex = new JLabel(sdb.namefields[7]+":");
+		this.jlsex = new JLabel("СТАТЬ:");
 		this.jlsex.setBounds(285, 465, 150, 20);
 		this.jlsex.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.contentPane.add(this.jlsex);
 
-		this.jlidname = new JLabel(sdb.namefields[9]+":");
+		this.jlidname = new JLabel("ГРАФІК:");
 		this.jlidname.setBounds(285, 490, 150, 20);
 		this.jlidname.setFont(new Font("Tahoma", Font.BOLD, 14));
 		this.contentPane.add(this.jlidname);
@@ -265,8 +272,8 @@ public class FormHumans extends JFrame {
 		
 		if(this.ld>0){
 		int sr = jt.getSelectedRow();
-		this.idhumans=model.getValueAt(sr, 0).toString();
-		this.jtlastname.setText(model.getValueAt(sr, 1).toString());
+		this.idhumans=jt.getModel().getValueAt(sr, 0).toString();
+		this.jtlastname.setText(jt.getModel().getValueAt(sr, 1).toString());
 		this.jtname.setText(jt.getValueAt(sr, 2).toString());
 		this.jtfathersname.setText(jt.getValueAt(sr, 3).toString());
 		this.jtposition.setText(jt.getValueAt(sr, 4).toString());
@@ -339,18 +346,6 @@ public class FormHumans extends JFrame {
 		}
 	}
 	
-	//Отримання даних із таблиці працівники
-	void getDani(){		
-		this.sdb = new QueryHumansTable();
-		try {
-			this.listDBH=this.sdb.queryDbHumans();
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}		
-		this.ld = listDBH.length;				
-	}
 	
 	//Отримання даних з таблиці часові графіки
 	void getDaniTime(){
@@ -380,10 +375,18 @@ public class FormHumans extends JFrame {
         };
 	}
 	
-	void setvisualTable(){
-		model = new DefaultTableModel(listDBH,sdb.namefields);		
-		setTablemodel();    			
-		
+	void setvisualTable(){				
+
+			try {
+				model = this.sdb.queryDbHumans();
+				this.ld = model.getRowCount();
+				setTablemodel();
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+ 					
 		jsp = new JScrollPane(jt);
 		jsp.setBounds(10, 10, 780, 400);
 		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -410,7 +413,7 @@ public class FormHumans extends JFrame {
 		jt.getTableHeader().setReorderingAllowed(false);
 		
 		
-	    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+	    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(jt.getModel());
 	    jt.setRowSorter(sorter);
 		jt.getColumnModel().getColumn(0).setPreferredWidth(20);
 		jt.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
