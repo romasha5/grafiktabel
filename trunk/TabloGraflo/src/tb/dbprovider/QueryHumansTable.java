@@ -58,7 +58,7 @@ public class QueryHumansTable {
 		return tbm;		
 	}	
 	
-	public void queryDelete(String table,String id ) throws SQLException
+	public void queryDelete(String id ) throws SQLException
 		  {	    
 		    userProperties up = new userProperties();
 			c = null;
@@ -68,7 +68,7 @@ public class QueryHumansTable {
 		      c = DriverManager.getConnection(up.getConStr());
 		      c.setAutoCommit(false);
 		      stmt = c.createStatement();
-		      String sql = "DELETE from "+table+" where ID="+id+";";
+		      String sql = "DELETE from HUMANS where ID="+id+";";
 		      stmt.executeUpdate(sql);	
 		      c.commit();
 			  stmt.close();
