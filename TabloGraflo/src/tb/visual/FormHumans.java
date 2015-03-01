@@ -87,6 +87,8 @@ public class FormHumans extends JFrame {
 
 	private String infa;
 
+	private String infa1;
+
 	/**
 	 * Конструктор форми "Довідник працівників"
 	 * @throws HeadlessException
@@ -515,6 +517,7 @@ public class FormHumans extends JFrame {
 					jbadd.setText("Відміна");
 					jbadd.setForeground(Color.RED);
 					jbchange.setEnabled(false);
+					jbdelete.setEnabled(false);
 					jbsave.setEnabled(true);
 	        		jbsave.setForeground(Color.GREEN);
 					flag = true;
@@ -525,6 +528,7 @@ public class FormHumans extends JFrame {
 					jbadd.setText("Додати");
 					jbadd.setForeground(Color.BLACK);
 					jbchange.setEnabled(true);
+					jbdelete.setEnabled(true);
 					jbsave.setEnabled(false);
 					flag = false;
 				}
@@ -541,6 +545,7 @@ public class FormHumans extends JFrame {
 					jbchange.setText("Відміна");
 					jbchange.setForeground(Color.RED);
 					jbadd.setEnabled(false);
+					jbdelete.setEnabled(false);
 					jtlastname.requestFocus(true);
 					jtlastname.selectAll();
 					flag = true;
@@ -555,6 +560,7 @@ public class FormHumans extends JFrame {
 					jbchange.setForeground(Color.BLACK);
 					flagaddchange = false;
 					jbadd.setEnabled(true);
+					jbdelete.setEnabled(true);
 					jbsave.setEnabled(false);
 					flag = false;
 				}
@@ -668,6 +674,7 @@ public class FormHumans extends JFrame {
 		JLabel[]jlab = new JLabel[]{jllastname,jlname,jlfathersname,jlposition,
 							jltablenumber,jlpercent,jlsex,jlidname};
 		infa = new String();
+		infa1 = new String();
 		for (int i = 0; i < jtf.length; i++) {
 			String jt = jtf[i].getText();
 			if (jt == null || "".equals(jt) || jt.trim().length() == 0) {
@@ -684,7 +691,7 @@ public class FormHumans extends JFrame {
 			char[] jt = jtf[i].getText().toCharArray();
 				for (int j = 0; j < jt.length; j++) {
 					if (!Character.isDigit(jt[j])) {
-						
+						infa1+=jlab[i].getText()+"\n";
 					}
 				}
 		}
@@ -692,6 +699,10 @@ public class FormHumans extends JFrame {
 			JOptionPane.showMessageDialog(null, infa+"ЯВЛЯЮТЬСЯ ПУСТИМИ");
 			return true;
 		}	
+		else if (infa1.length()>0){
+			JOptionPane.showMessageDialog(null,"Поля "+ infa1+" повинні бути цифрові.");
+			return true;
+		}
 		else {
 			return false;
 		}
