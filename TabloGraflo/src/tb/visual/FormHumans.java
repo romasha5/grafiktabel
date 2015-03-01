@@ -28,7 +28,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import net.proteanit.sql.DbUtils;
 import tb.dbaseclasses.DbHumans;
 import tb.dbprovider.QueryHumansTable;
 import tb.dbprovider.QueryTimeTable;
@@ -680,6 +679,14 @@ public class FormHumans extends JFrame {
 			if (tj == null || "".equals(tj) || tj.trim().length() == 0) {
 				infa+=jlab[i+jtf.length].getText()+"\n";
 			}
+		}
+		for (int i = 4; i < jtf.length; i++) {
+			char[] jt = jtf[i].getText().toCharArray();
+				for (int j = 0; j < jt.length; j++) {
+					if (!Character.isDigit(jt[j])) {
+						
+					}
+				}
 		}
 		if (infa.length()>0) {
 			JOptionPane.showMessageDialog(null, infa+"ЯВЛЯЮТЬСЯ ПУСТИМИ");
