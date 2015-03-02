@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,6 +26,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -88,6 +91,8 @@ public class FormHumans extends JFrame {
 	private String infa;
 
 	private String infa1;
+
+	protected JFileChooser fileopen;
 
 	/**
 	 * Конструктор форми "Довідник працівників"
@@ -624,6 +629,23 @@ public class FormHumans extends JFrame {
 			}
 			}
 		});
+	
+		this.jbimport.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileopen = new JFileChooser();
+				
+				FileFilter fill = new FileNameExtensionFilter("EXCEL file", "xls");
+				fileopen.setFileFilter(fill);
+				int ret = fileopen.showOpenDialog(str);
+				if(ret==JFileChooser.APPROVE_OPTION){
+					
+				}
+				
+			}
+		});
+	
 	}
 	
 	void insertToTableHumans(){
